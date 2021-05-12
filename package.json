@@ -1,5 +1,11 @@
 {
   "name": "wedding-essential",
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>test/setupTests.js"
+    ]
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,7 +20,9 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "autoprefixer": "^10.2.5",
+    "enzyme": "^3.11.0",
     "postcss": "^8.2.15",
     "tailwindcss": "^2.1.2"
   }
