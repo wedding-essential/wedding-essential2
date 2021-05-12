@@ -1,17 +1,12 @@
 {
   "name": "wedding-essential",
-  "jest": {
-    "verbose": true,
-    "setupFilesAfterEnv": [
-      "<rootDir>test/setupTests.js"
-    ]
-  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@svgr/webpack": "^5.5.0",
@@ -22,7 +17,9 @@
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "autoprefixer": "^10.2.5",
+    "babel-jest": "^26.6.3",
     "enzyme": "^3.11.0",
+    "jest": "^26.6.3",
     "postcss": "^8.2.15",
     "tailwindcss": "^2.1.2"
   }
