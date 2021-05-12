@@ -1,3 +1,8 @@
+import WELogo from "../public/components/WELogo";
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <WELogo />
+    </div>
+  );
 }
