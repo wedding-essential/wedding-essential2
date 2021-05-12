@@ -7,7 +7,7 @@ const setup = () => {
   return shallow(<GoldenLink href="/hello">Hello World</GoldenLink>);
 };
 
-test("renders without error", () => {
+test("should render without error", () => {
   let wrapper = setup();
   const goldenLink = findByTestAttr(wrapper, "golden-link");
   expect(goldenLink.exists()).toBe(true);
