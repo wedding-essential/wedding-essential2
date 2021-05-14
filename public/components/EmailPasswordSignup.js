@@ -1,4 +1,6 @@
 import React from "react";
+import { onInputChange, onFocusOut } from "../helpers/formUtils";
+
 const formReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_FORM":
@@ -24,21 +26,6 @@ export default function EmailPasswordSignup() {
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    dispatch({
-      type: "UPDATE_FORM",
-      payload: {
-        name,
-        value,
-        hasError: false,
-        error: "",
-        touched: false,
-        isFormValid: true,
-      },
-    });
-  };
-
   return (
     <div className="container flex flex-col px-5" title="signup-form">
       <label className="block mt-5" htmlFor="email">
@@ -49,7 +36,12 @@ export default function EmailPasswordSignup() {
           name="email"
           id="email"
           value={state.email.value}
-          onChange={handleChange}
+          onChange={(e) => {
+            onInputChange("email", e.target.value, dispatch, state);
+          }}
+          onBlur={(e) => {
+            onFocusOut("email", e.target.value, dispatch, state);
+          }}
         />
       </label>
 
@@ -61,7 +53,12 @@ export default function EmailPasswordSignup() {
           name="password"
           id="password"
           value={state.password.value}
-          onChange={handleChange}
+          onChange={(e) => {
+            onInputChange("password", e.target.value, dispatch, state);
+          }}
+          onBlur={(e) => {
+            onFocusOut("password", e.target.value, dispatch, state);
+          }}
         />
       </label>
 
@@ -73,7 +70,12 @@ export default function EmailPasswordSignup() {
           name="repeat-password"
           id="repeat-password"
           value={state.repeatPassword.value}
-          onChange={handleChange}
+          onChange={(e) => {
+            onInputChange("repeatPassword", e.target.value, dispatch, state);
+          }}
+          onBlur={(e) => {
+            onFocusOut("repeatPassword", e.target.value, dispatch, state);
+          }}
         />
       </label>
 
