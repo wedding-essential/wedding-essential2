@@ -2,14 +2,6 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    colors: {
-      gold: {
-        DEFAULT: "#E8BE46",
-      },
-      gray: {
-        DEFAULT: "#585858",
-      },
-    },
     screens: {
       sm: "640px",
       // => @media (min-width: 640px) { ... }
@@ -30,6 +22,14 @@ module.exports = {
       backgroundImage: (theme) => ({
         "pink-pattern": "url('/pink-pattern.svg')",
       }),
+      colors: {
+        gold: {
+          DEFAULT: "#E8BE46",
+        },
+        gray: {
+          DEFAULT: "#585858",
+        },
+      },
     },
   },
   variants: {

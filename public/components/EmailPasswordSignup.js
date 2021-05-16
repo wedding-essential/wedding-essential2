@@ -45,7 +45,7 @@ export default function EmailPasswordSignup() {
         />
       </label>
       {state.email.touched && state.email.hasError && (
-        <div title="error-email" className="error">
+        <div title="error-email" className="text-red-600 mt-2 ml-2">
           {state.email.error}
         </div>
       )}
@@ -79,7 +79,7 @@ export default function EmailPasswordSignup() {
         />
       </label>
       {state.password.touched && state.password.hasError && (
-        <div title="error-password" className="error">
+        <div title="error-password" className="text-red-600 mt-2 ml-2">
           {state.password.error}
         </div>
       )}
@@ -113,7 +113,7 @@ export default function EmailPasswordSignup() {
         />
       </label>
       {state.repeatPassword.touched && state.repeatPassword.hasError && (
-        <div title="error-repeat" className="error">
+        <div title="error-repeat" className="text-red-600 mt-2 ml-2">
           {state.repeatPassword.error}
         </div>
       )}
