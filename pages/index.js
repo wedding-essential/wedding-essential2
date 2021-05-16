@@ -3,7 +3,7 @@ import GoldenLink from "../public/components/GoldenLink";
 
 export default function Home() {
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen w-screen flex justify-center items-center bg-pink-pattern bg-cover">
       <main className="container w-3/5 xl:w-4/5 flex flex-col xl:flex-row">
         <div className="w-full xl:w-2/4 flex justify-center">
           <WELogo />
