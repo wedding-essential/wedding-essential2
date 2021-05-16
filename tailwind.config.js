@@ -28,7 +28,7 @@ module.exports = {
     },
     extend: {
       backgroundImage: (theme) => ({
-        "pink-pattern": "url('./pink-pattern.svg')",
+        "pink-pattern": "url('/pink-pattern.svg')",
       }),
     },
   },
