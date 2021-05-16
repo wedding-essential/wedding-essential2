@@ -1,6 +1,7 @@
 import React from "react";
+import { validateAndUpdate } from "../helpers/EmailPasswordForm";
 import EmailPasswordSignup from "./EmailPasswordSignup";
-import { render, screen } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 
 import { findByTestAttr } from "../../test/testutils";
 
@@ -32,54 +33,43 @@ test("should render repeat password field", () => {
   expect(repeatPasswordInput).toBeTruthy();
 });
 
-test.skip("should render a signup buton", () => {
-  const { getByRole } = setup();
-  const signupButton = getByRole("button");
-  expect(signupButton).toBeFalsy(true);
+test("should render a signup buton", () => {
+  const { getByTitle } = setup();
+  const signupButton = getByTitle("signup");
+  expect(signupButton).toBeTruthy();
 });
 
-describe("should signup a user", () => {
-  describe("input values are valid", () => {
-    test.skip("submit values of the form when signup button is clicked", () => {
-      const mockSignupWithEmailandPassword = jest.fn();
-      const wrapper = setup();
-      wrapper.signupWithEmailandPassword = mockSignupWithEmailandPassword;
-
-      console.log(wrapper.signupWithEmailandPassword);
-      const emailInput = findByTestAttr(wrapper, "email-input");
-      emailInput.simulate("change", { target: { value: "hello@world.com" } });
-
-      const passwordInput = findByTestAttr(wrapper, "password-input");
-      passwordInput.simulate("change", {
-        target: { value: "IAmrf4grtAlivehy7" },
-      });
-
-      const repeatPasswordInput = findByTestAttr(
-        wrapper,
-        "repeat-password-input"
-      );
-      repeatPasswordInput.simulate("change", {
-        target: { value: "IAmrf4grtAlivehy7" },
-      });
-
-      const signupButton = findByTestAttr(wrapper, "signup-btn");
-      signupButton.simulate("click");
-
-      expect(mockSignupWithEmailandPassword).toHaveBeenCalled();
-    });
+describe("should render input level error message when input is not valid", () => {
+  test("should render correct error message when email is invalid", async () => {
+    const { getByLabelText, findByTitle } = setup();
+    const emailInput = getByLabelText("email", { exact: false });
+    fireEvent.change(emailInput, { target: { value: "helloworld.com" } });
+    fireEvent.blur(emailInput);
+    const errorMessage = await findByTitle("error-email");
+    expect(errorMessage.textContent).toBe("This is not an email");
   });
 
-  describe("should display error message when input is invalid", () => {
-    describe("email input is invalid", () => {
-      test.skip("email input is empty", () => {});
-      test.todo("email input contains invalid characters");
-      test.todo("input is not an email");
-    });
+  test("should render correct error message when password is invalid", async () => {
+    const { getByLabelText, findByTitle } = setup();
+    const passwordInput = getByLabelText("Password");
+    fireEvent.change(passwordInput, { target: { value: "Gh@jeproFt" } });
+    fireEvent.blur(passwordInput);
+    const errorMessage = await findByTitle("error-password");
+    expect(errorMessage.textContent).toBe(
+      "Password is too weak. Use at least two numbers."
+    );
+  });
 
-    describe("password input is invalid", () => {
-      test.todo("password is too short");
-      test.todo("password is too weak");
-      test.todo("password and repeat password are different");
+  test("should render correct error message when password and repeat passord are different", async () => {
+    const { getByLabelText, findByTitle } = setup();
+    const passwordInput = getByLabelText("Password");
+    fireEvent.change(passwordInput, { target: { value: "123Gh@jeproFt" } });
+    const repeatPasswordInput = getByLabelText("repeat", { exact: false });
+    fireEvent.change(repeatPasswordInput, {
+      target: { value: "1234Gh@jeproFt" },
     });
+    fireEvent.blur(repeatPasswordInput);
+    const errorMessage = await findByTitle("error-repeat");
+    expect(errorMessage.textContent).toBe("Password is different.");
   });
 });

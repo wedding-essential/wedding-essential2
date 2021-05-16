@@ -1,5 +1,5 @@
 import React from "react";
-import { onInputChange, onFocusOut } from "../helpers/formUtils";
+import { validateAndUpdate } from "../helpers/EmailPasswordForm";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -18,9 +18,9 @@ const formReducer = (state, action) => {
 
 export default function EmailPasswordSignup() {
   const initialValues = {
-    email: { value: "", touched: false, hasError: true, error: "" },
-    password: { value: "", touched: false, hasError: true, error: "" },
-    repeatPassword: { value: "", touched: false, hasError: true, error: "" },
+    email: { value: "", touched: false, hasError: false, error: "" },
+    password: { value: "", touched: false, hasError: false, error: "" },
+    repeatPassword: { value: "", touched: false, hasError: false, error: "" },
     isFormValid: false,
   };
 
@@ -37,13 +37,18 @@ export default function EmailPasswordSignup() {
           id="email"
           value={state.email.value}
           onChange={(e) => {
-            onInputChange("email", e.target.value, dispatch, state);
+            validateAndUpdate("email", e.target.value, dispatch, state, false);
           }}
           onBlur={(e) => {
-            onFocusOut("email", e.target.value, dispatch, state);
+            validateAndUpdate("email", e.target.value, dispatch, state, true);
           }}
         />
       </label>
+      {state.email.touched && state.email.hasError && (
+        <div title="error-email" className="error">
+          {state.email.error}
+        </div>
+      )}
 
       <label className="block mt-5" htmlFor="password">
         <span className="text-gray">Password</span>
@@ -54,13 +59,30 @@ export default function EmailPasswordSignup() {
           id="password"
           value={state.password.value}
           onChange={(e) => {
-            onInputChange("password", e.target.value, dispatch, state);
+            validateAndUpdate(
+              "password",
+              e.target.value,
+              dispatch,
+              state,
+              false
+            );
           }}
           onBlur={(e) => {
-            onFocusOut("password", e.target.value, dispatch, state);
+            validateAndUpdate(
+              "password",
+              e.target.value,
+              dispatch,
+              state,
+              true
+            );
           }}
         />
       </label>
+      {state.password.touched && state.password.hasError && (
+        <div title="error-password" className="error">
+          {state.password.error}
+        </div>
+      )}
 
       <label className="block mt-5" htmlFor="repeat-password">
         <span className="text-gray">Repeat password</span>
@@ -71,15 +93,35 @@ export default function EmailPasswordSignup() {
           id="repeat-password"
           value={state.repeatPassword.value}
           onChange={(e) => {
-            onInputChange("repeatPassword", e.target.value, dispatch, state);
+            validateAndUpdate(
+              "repeatPassword",
+              e.target.value,
+              dispatch,
+              state,
+              false
+            );
           }}
           onBlur={(e) => {
-            onFocusOut("repeatPassword", e.target.value, dispatch, state);
+            validateAndUpdate(
+              "repeatPassword",
+              e.target.value,
+              dispatch,
+              state,
+              true
+            );
           }}
         />
       </label>
+      {state.repeatPassword.touched && state.repeatPassword.hasError && (
+        <div title="error-repeat" className="error">
+          {state.repeatPassword.error}
+        </div>
+      )}
 
-      <button className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center">
+      <button
+        title="signup"
+        className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
+      >
         Sign up
       </button>
     </div>
