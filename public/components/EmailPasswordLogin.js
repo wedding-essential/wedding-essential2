@@ -16,16 +16,14 @@ const formReducer = (state, action) => {
   }
 };
 
-export default function EmailPasswordSignup() {
+export default function EmailPasswordLogin() {
   const initialValues = {
     email: { value: "", touched: false, hasError: false, error: "" },
-    password: { value: "", touched: false, hasError: false, error: "" },
-    repeatPassword: { value: "", touched: false, hasError: false, error: "" },
+    password: { value: "", touched: false, hasError: true, error: "" },
     isFormValid: false,
   };
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
-
   const [showFormError, setShowFormError] = React.useState({
     value: false,
     error: "",
@@ -88,54 +86,14 @@ export default function EmailPasswordSignup() {
           }}
         />
       </label>
-      {state.password.touched && state.password.hasError && (
-        <div title="error-password" className="text-red-600 mt-2 ml-2">
-          {state.password.error}
-        </div>
-      )}
-
-      <label className="block mt-5" htmlFor="repeat-password">
-        <span className="text-gray">Repeat password</span>
-        <input
-          className="form-input mt-1 block w-full"
-          type="password"
-          name="repeat-password"
-          id="repeat-password"
-          value={state.repeatPassword.value}
-          onChange={(e) => {
-            validateAndUpdate(
-              "repeatPassword",
-              e.target.value,
-              dispatch,
-              state,
-              false
-            );
-          }}
-          onBlur={(e) => {
-            validateAndUpdate(
-              "repeatPassword",
-              e.target.value,
-              dispatch,
-              state,
-              true
-            );
-          }}
-        />
-      </label>
-      {state.repeatPassword.touched && state.repeatPassword.hasError && (
-        <div title="error-repeat" className="text-red-600 mt-2 ml-2">
-          {state.repeatPassword.error}
-        </div>
-      )}
-
       <button
-        title="signup"
+        title="login"
         className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
         onClick={() => {
-          submitHandler(setShowFormError, state, "signup");
+          submitHandler(setShowFormError, state, "login");
         }}
       >
-        Sign up
+        Log in
       </button>
     </div>
   );

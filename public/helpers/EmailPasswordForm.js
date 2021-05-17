@@ -91,11 +91,26 @@ export const validateAndUpdate = (
   });
 };
 
-export const submitHandler = (setShowError, formState) => {
-  if (!formState.isFormValid) {
-    setShowError(true);
-  } else {
-    setShowError(false);
-    // signup logic
+export const submitHandler = (setShowError, formState, formType) => {
+  switch (formType) {
+    case "signup":
+      if (!formState.isFormValid) {
+        setShowError({
+          value: true,
+          error: "Please fill all the field correctly",
+        });
+      } else {
+        // signup logic
+      }
+      break;
+    case "login":
+      if (formState.email.hasError) {
+        setShowError({
+          value: true,
+          error: "Please fill all the field correctly",
+        });
+      } else {
+        //login logic
+      }
   }
 };
