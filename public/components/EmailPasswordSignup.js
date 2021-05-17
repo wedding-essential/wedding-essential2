@@ -26,13 +26,16 @@ export default function EmailPasswordSignup() {
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
 
-  const [showFormError, setShowFormError] = React.useState(false);
+  const [showFormError, setShowFormError] = React.useState({
+    value: false,
+    error: "",
+  });
 
   return (
     <div className="container flex flex-col px-5" title="signup-form">
-      {showFormError && !state.isFormValid && (
+      {showFormError.value && !state.isFormValid && (
         <div title="error-form" className="text-red-600 mt-2 ml-2">
-          <p>Please fill all the fields correctly</p>
+          <p>{showFormError.error}</p>
         </div>
       )}
       <label className="block mt-5" htmlFor="email">
