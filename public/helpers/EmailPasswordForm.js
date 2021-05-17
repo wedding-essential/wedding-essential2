@@ -90,3 +90,12 @@ export const validateAndUpdate = (
     },
   });
 };
+
+export const submitHandler = (setShowError, formState) => {
+  if (!formState.isFormValid) {
+    setShowError(true);
+  } else {
+    setShowError(false);
+    // signup logic
+  }
+};

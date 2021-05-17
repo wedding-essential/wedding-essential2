@@ -1,5 +1,5 @@
 import React from "react";
-import { validateAndUpdate } from "../helpers/EmailPasswordForm";
+import { validateAndUpdate, submitHandler } from "../helpers/EmailPasswordForm";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -26,8 +26,15 @@ export default function EmailPasswordSignup() {
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
 
+  const [showFormError, setShowFormError] = React.useState(false);
+
   return (
     <div className="container flex flex-col px-5" title="signup-form">
+      {showFormError && !state.isFormValid && (
+        <div title="error-form" className="text-red-600 mt-2 ml-2">
+          <p>Please fill all the fields correctly</p>
+        </div>
+      )}
       <label className="block mt-5" htmlFor="email">
         <span className="text-gray">Email</span>
         <input
@@ -121,6 +128,9 @@ export default function EmailPasswordSignup() {
       <button
         title="signup"
         className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
+        onClick={() => {
+          submitHandler(setShowFormError, state);
+        }}
       >
         Sign up
       </button>

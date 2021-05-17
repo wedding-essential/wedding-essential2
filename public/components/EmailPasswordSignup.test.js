@@ -73,3 +73,37 @@ describe("should render input level error message when input is not valid", () =
     expect(errorMessage.textContent).toBe("Password is different.");
   });
 });
+
+describe("should render form error message when signup button is clicked", () => {
+  test("should not render an error message if all fields are valid", () => {
+    const { getByLabelText, getByTitle, queryByTitle } = setup();
+    const emailInput = getByLabelText("email", { exact: false });
+    const passwordInput = getByLabelText("Password");
+    const repeatPasswordInput = getByLabelText("repeat", { exact: false });
+    const signupButton = getByTitle("signup");
+    fireEvent.change(emailInput, { target: { value: "hello@world.com" } });
+    fireEvent.change(passwordInput, { target: { value: "123Gh@jeproFt" } });
+    fireEvent.change(repeatPasswordInput, {
+      target: { value: "123Gh@jeproFt" },
+    });
+    fireEvent.click(signupButton);
+    const formError = queryByTitle("error-form");
+    expect(formError).toBeNull();
+  });
+
+  test("should render an error message if at least one field is invalid", () => {
+    const { getByLabelText, getByTitle, queryByTitle } = setup();
+    const emailInput = getByLabelText("email", { exact: false });
+    const passwordInput = getByLabelText("Password");
+    const repeatPasswordInput = getByLabelText("repeat", { exact: false });
+    const signupButton = getByTitle("signup");
+    fireEvent.change(emailInput, { target: { value: "helloworld.com" } });
+    fireEvent.change(passwordInput, { target: { value: "123Gh@jeproFt" } });
+    fireEvent.change(repeatPasswordInput, {
+      target: { value: "123Gh@jeproFt" },
+    });
+    fireEvent.click(signupButton);
+    const formError = queryByTitle("error-form");
+    expect(formError).toBeInTheDocument();
+  });
+});
