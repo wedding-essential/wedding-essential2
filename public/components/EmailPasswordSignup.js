@@ -11,6 +11,11 @@ const formReducer = (state, action) => {
         [name]: { ...state[name], value, hasError, error, touched },
         isFormValid,
       };
+    case "HANDLE_FORM_ERROR":
+      return {
+        ...state,
+        isFormValid: { ...state.isFormValid, ...action.payload },
+      };
     default:
       return state;
   }
@@ -21,21 +26,16 @@ export default function EmailPasswordSignup() {
     email: { value: "", touched: false, hasError: false, error: "" },
     password: { value: "", touched: false, hasError: false, error: "" },
     repeatPassword: { value: "", touched: false, hasError: false, error: "" },
-    isFormValid: false,
+    isFormValid: { value: false, error: "", show: false },
   };
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
 
-  const [showFormError, setShowFormError] = React.useState({
-    value: false,
-    error: "",
-  });
-
   return (
     <div className="container flex flex-col px-5" title="signup-form">
-      {showFormError.value && !state.isFormValid && (
+      {state.isFormValid.show && !state.isFormValid.value && (
         <div title="error-form" className="text-red-600 mt-2 ml-2">
-          <p>{showFormError.error}</p>
+          <p>{state.isFormValid.error}</p>
         </div>
       )}
       <label className="block mt-5" htmlFor="email">
@@ -130,9 +130,9 @@ export default function EmailPasswordSignup() {
 
       <button
         title="signup"
-        className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
+        className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center focus:outline-none"
         onClick={() => {
-          submitHandler(setShowFormError, state, "signup");
+          submitHandler(state, dispatch, "signup");
         }}
       >
         Sign up

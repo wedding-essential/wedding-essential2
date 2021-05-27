@@ -1,9 +1,7 @@
 import React from "react";
-import { validateAndUpdate } from "../helpers/EmailPasswordForm";
 import EmailPasswordSignup from "./EmailPasswordSignup";
-import { render, fireEvent } from "@testing-library/react";
-
-import { findByTestAttr } from "../../test/testutils";
+import { render, fireEvent, waitFor } from "@testing-library/react";
+import firebase from "../../firebase";
 
 const setup = () => {
   return render(<EmailPasswordSignup />);
@@ -75,35 +73,62 @@ describe("should render input level error message when input is not valid", () =
 });
 
 describe("should render form error message when signup button is clicked", () => {
-  test("should not render an error message if all fields are valid", () => {
+  test("should not render an error message if all fields are valid", async () => {
     const { getByLabelText, getByTitle, queryByTitle } = setup();
     const emailInput = getByLabelText("email", { exact: false });
     const passwordInput = getByLabelText("Password");
     const repeatPasswordInput = getByLabelText("repeat", { exact: false });
     const signupButton = getByTitle("signup");
+
     fireEvent.change(emailInput, { target: { value: "hello@world.com" } });
     fireEvent.change(passwordInput, { target: { value: "123Gh@jeproFt" } });
     fireEvent.change(repeatPasswordInput, {
       target: { value: "123Gh@jeproFt" },
     });
-    fireEvent.click(signupButton);
-    const formError = queryByTitle("error-form");
-    expect(formError).toBeNull();
-  });
 
-  test("should render an error message if at least one field is invalid", () => {
-    const { getByLabelText, getByTitle, queryByTitle } = setup();
+    fireEvent.click(signupButton);
+
+    await waitFor(() => {
+      expect(queryByTitle("error-form")).toBeNull();
+    });
+  });
+  test("should render an error message if at least one field is invalid", async () => {
+    const { getByLabelText, getByTitle } = setup();
     const emailInput = getByLabelText("email", { exact: false });
     const passwordInput = getByLabelText("Password");
     const repeatPasswordInput = getByLabelText("repeat", { exact: false });
     const signupButton = getByTitle("signup");
+
     fireEvent.change(emailInput, { target: { value: "helloworld.com" } });
     fireEvent.change(passwordInput, { target: { value: "123Gh@jeproFt" } });
     fireEvent.change(repeatPasswordInput, {
       target: { value: "123Gh@jeproFt" },
     });
     fireEvent.click(signupButton);
-    const formError = queryByTitle("error-form");
-    expect(formError).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(getByTitle("error-form")).toBeTruthy();
+    });
   });
+  test.todo("should render a message if user already exists");
 });
+
+/* test("should render a message when user already exists", async () => {
+    const { getByLabelText, getByTitle, queryByTitle } = setup();
+    const emailInput = getByLabelText("email", { exact: false });
+    const passwordInput = getByLabelText("Password");
+    const repeatPasswordInput = getByLabelText("repeat", { exact: false });
+    const signupButton = getByTitle("signup");
+
+    fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
+    fireEvent.change(passwordInput, { target: { value: "123Gh@jeproFt" } });
+    fireEvent.change(repeatPasswordInput, {
+      target: { value: "123Gh@jeproFt" },
+    });
+    await fireEvent.click(signupButton);
+
+    const formError = await queryByTitle("error-form");
+    expect(formError).toBeInTheDocument();
+  }); */
+
+//TODO: setup a user in authEmulator and delete user after test

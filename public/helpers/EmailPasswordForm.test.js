@@ -79,7 +79,7 @@ describe("form validation", () => {
       email: { value: "", touched: false, hasError: false, error: "" },
       password: { value: "", touched: false, hasError: false, error: "" },
       repeatPassword: { value: "", touched: false, hasError: false, error: "" },
-      isFormValid: false,
+      isFormValid: { value: false, error: "", show: false },
     };
     const mockDispatch = jest.fn();
 
@@ -95,7 +95,7 @@ describe("form validation", () => {
       payload: {
         error: "",
         hasError: false,
-        isFormValid: true,
+        isFormValid: { value: true, error: "" },
         name: "password",
         touched: false,
         value: "123Gh@jeproFt",
@@ -109,7 +109,7 @@ describe("form validation", () => {
       email: { value: "", touched: false, hasError: false, error: "" },
       password: { value: "", touched: false, hasError: false, error: "" },
       repeatPassword: { value: "", touched: false, hasError: false, error: "" },
-      isFormValid: false,
+      isFormValid: { value: false, error: "", show: false },
     };
 
     const mockDispatch = jest.fn();
@@ -126,7 +126,10 @@ describe("form validation", () => {
       payload: {
         error: "Password is too weak. Use at least two numbers.",
         hasError: true,
-        isFormValid: false,
+        isFormValid: {
+          value: false,
+          error: "Please fill the fields correctly",
+        },
         name: "password",
         touched: true,
         value: "Gh@jeproFt",
@@ -135,7 +138,7 @@ describe("form validation", () => {
     });
   });
 
-  test('"should dispatch isFormValid: false when any field is not valid"', () => {
+  test("should dispatch isFormValid: false when any field is not valid", () => {
     const invalidFormState = {
       email: { value: "", touched: false, hasError: false, error: "" },
       password: {
@@ -145,7 +148,11 @@ describe("form validation", () => {
         error: "Password is too weak. Use at least two numbers.",
       },
       repeatPassword: { value: "", touched: false, hasError: false, error: "" },
-      isFormValid: false,
+      isFormValid: {
+        value: false,
+        error: "Please fill the fields correctly",
+        show: false,
+      },
     };
     const mockDispatch = jest.fn();
     validateAndUpdate(
@@ -160,7 +167,10 @@ describe("form validation", () => {
       payload: {
         error: "",
         hasError: false,
-        isFormValid: false,
+        isFormValid: {
+          value: false,
+          error: "Please fill the fields correctly",
+        },
         name: "email",
         touched: true,
         value: "hello@gmail.com",

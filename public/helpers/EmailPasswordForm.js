@@ -1,3 +1,5 @@
+import firebase from "../../firebase";
+
 export const validateInput = (name, value, formState) => {
   let hasError = false,
     error = "";
@@ -64,16 +66,16 @@ export const validateAndUpdate = (
 ) => {
   const { hasError, error } = validateInput(name, value, formState);
 
-  let isFormValid = true;
+  let isFormValid = { value: true, error: "" };
   for (const key in formState) {
     const item = formState[key];
     // Check if the current field has error
     if (key === name && hasError) {
-      isFormValid = false;
+      isFormValid = { value: false, error: "Please fill the fields correctly" };
       break;
     } else if (key !== name && item.hasError) {
       // Check if any other field has error
-      isFormValid = false;
+      isFormValid = { value: false, error: "Please fill the fields correctly" };
       break;
     }
   }
@@ -91,16 +93,31 @@ export const validateAndUpdate = (
   });
 };
 
-export const submitHandler = (setShowError, formState, formType) => {
+export const submitHandler = (formState, dispatch, formType) => {
   switch (formType) {
     case "signup":
-      if (!formState.isFormValid) {
-        setShowError({
-          value: true,
-          error: "Please fill all the field correctly",
+      if (!formState.isFormValid.value) {
+        dispatch({
+          type: "HANDLE_FORM_ERROR",
+          payload: {
+            value: false,
+            error: "Please fill all the field correctly",
+            show: true,
+          },
         });
       } else {
-        // signup logic
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(
+            formState.email.value,
+            formState.password.value
+          )
+          .catch((err) => {
+            dispatch({
+              type: "HANDLE_FORM_ERROR",
+              payload: { value: false, error: err.message, show: true },
+            });
+          });
       }
       break;
     case "login":
@@ -110,7 +127,23 @@ export const submitHandler = (setShowError, formState, formType) => {
           error: "Please fill all the field correctly",
         });
       } else {
-        //login logic
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(
+            formState.email.value,
+            formState.password.value
+          )
+          .catch((err) => {
+            console.log({ err });
+            dispatch({
+              type: "HANDLE_FORM_ERROR",
+              payload: {
+                value: false,
+                error: "Invalid credentials",
+                show: true,
+              },
+            });
+          });
       }
   }
 };
