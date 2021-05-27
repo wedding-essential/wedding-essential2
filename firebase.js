@@ -17,11 +17,11 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-let firebaseAuth;
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  firebaseAuth = firebase.auth();
 }
 
-export { firebaseAuth };
+if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+  firebase.auth().useEmulator("http://localhost:9099");
+}
 export default firebase;
