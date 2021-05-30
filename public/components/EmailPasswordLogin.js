@@ -1,5 +1,6 @@
 import React from "react";
 import { validateAndUpdate, submitHandler } from "../helpers/EmailPasswordForm";
+import authContext from "../contexts/authContext";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -11,6 +12,11 @@ const formReducer = (state, action) => {
         [name]: { ...state[name], value, hasError, error, touched },
         isFormValid,
       };
+    case "HANDLE_FORM_ERROR":
+      return {
+        ...state,
+        isFormValid: { ...state.isFormValid, ...action.payload },
+      };
     default:
       return state;
   }
@@ -20,20 +26,18 @@ export default function EmailPasswordLogin() {
   const initialValues = {
     email: { value: "", touched: false, hasError: false, error: "" },
     password: { value: "", touched: false, hasError: true, error: "" },
-    isFormValid: false,
+    isFormValid: { value: false, error: "", show: false },
   };
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
-  const [showFormError, setShowFormError] = React.useState({
-    value: false,
-    error: "",
-  });
+
+  const { authDispatch } = authContext.useAuth();
 
   return (
     <div className="container flex flex-col px-5" title="signup-form">
-      {showFormError.value && !state.isFormValid && (
+      {state.isFormValid.show && !state.isFormValid.value && (
         <div title="error-form" className="text-red-600 mt-2 ml-2">
-          <p>{showFormError.error}</p>
+          <p>{state.isFormValid.error}</p>
         </div>
       )}
       <label className="block mt-5" htmlFor="email">
@@ -90,7 +94,7 @@ export default function EmailPasswordLogin() {
         title="login"
         className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
         onClick={() => {
-          submitHandler(setShowFormError, state, "login");
+          submitHandler(state, dispatch, "login", authDispatch);
         }}
       >
         Log in

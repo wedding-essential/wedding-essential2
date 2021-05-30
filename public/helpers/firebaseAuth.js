@@ -20,7 +20,6 @@ export const signInwithEmailAndPassword = (formState, dispatch) => {
     .auth()
     .signInWithEmailAndPassword(formState.email.value, formState.password.value)
     .catch((err) => {
-      console.log({ err });
       dispatch({
         type: "HANDLE_FORM_ERROR",
         payload: {
@@ -54,3 +53,5 @@ export const signUpwithGoogle = (authDispatch) => {
       // https://firebase.google.com/docs/auth/web/google-signin
     });
 };
+
+export const signOut = () => {};

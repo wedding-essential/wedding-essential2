@@ -1,4 +1,8 @@
 import firebase from "../../firebase";
+import {
+  signUpwithEmailAndPassword,
+  signInwithEmailAndPassword,
+} from "../helpers/firebaseAuth";
 
 export const validateInput = (name, value, formState) => {
   let hasError = false,
@@ -93,7 +97,7 @@ export const validateAndUpdate = (
   });
 };
 
-export const submitHandler = (formState, dispatch, formType) => {
+export const submitHandler = (formState, dispatch, formType, authDispatch) => {
   switch (formType) {
     case "signup":
       if (!formState.isFormValid.value) {
@@ -106,44 +110,23 @@ export const submitHandler = (formState, dispatch, formType) => {
           },
         });
       } else {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(
-            formState.email.value,
-            formState.password.value
-          )
-          .catch((err) => {
-            dispatch({
-              type: "HANDLE_FORM_ERROR",
-              payload: { value: false, error: err.message, show: true },
-            });
-          });
+        authDispatch({ type: "LOADING" });
+        signUpwithEmailAndPassword(formState, dispatch);
       }
       break;
     case "login":
       if (formState.email.hasError) {
-        setShowError({
-          value: true,
-          error: "Please fill all the field correctly",
+        dispatch({
+          type: "HANDLE_FORM_ERROR",
+          payload: {
+            value: false,
+            error: "Please fill all the field correctly",
+            show: true,
+          },
         });
       } else {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(
-            formState.email.value,
-            formState.password.value
-          )
-          .catch((err) => {
-            console.log({ err });
-            dispatch({
-              type: "HANDLE_FORM_ERROR",
-              payload: {
-                value: false,
-                error: "Invalid credentials",
-                show: true,
-              },
-            });
-          });
+        authDispatch({ type: "LOADING" });
+        signInwithEmailAndPassword(formState, dispatch);
       }
   }
 };
