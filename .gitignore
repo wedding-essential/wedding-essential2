@@ -34,3 +34,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Firebase debug
+*-debug.log
+
+# Test page
+pages/testPage.js
