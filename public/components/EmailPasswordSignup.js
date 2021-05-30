@@ -1,5 +1,6 @@
 import React from "react";
 import { validateAndUpdate, submitHandler } from "../helpers/EmailPasswordForm";
+import authContext from "../contexts/authContext";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -30,6 +31,8 @@ export default function EmailPasswordSignup() {
   };
 
   const [state, dispatch] = React.useReducer(formReducer, initialValues);
+
+  const authDispatch = authContext.useAuth().authDispatch;
 
   return (
     <div className="container flex flex-col px-5" title="signup-form">
@@ -132,7 +135,7 @@ export default function EmailPasswordSignup() {
         title="signup"
         className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center focus:outline-none"
         onClick={() => {
-          submitHandler(state, dispatch, "signup");
+          submitHandler(state, dispatch, "signup", authDispatch);
         }}
       >
         Sign up

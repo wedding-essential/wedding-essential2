@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "../../firebase";
 
 const authContext = React.createContext();
 
@@ -18,9 +19,12 @@ function useProvideAuth() {
       case "LOADING":
         return { ...authState, loading: true };
 
-      case "LOADED_USER":
+      case "UPDATE_USER":
         //TODO: auth should be updated with the object from Firebase
-        return { auth: {}, loading: false };
+        return {
+          auth: { ...authState.auth, ...action.payload },
+          loading: false,
+        };
 
       case "CLEARED_USER":
         return { auth: null, loading: false };
@@ -31,6 +35,28 @@ function useProvideAuth() {
     auth: null,
     loading: false,
   });
+
+  const getUserData = (firebaseUser) => {
+    const { displayName, email, emailVerified, token } = firebaseUser;
+    return { displayName, email, emailVerified, token };
+  };
+
+  const authStateChanged = (firebaseAuthState) => {
+    if (firebaseAuthState) {
+      const userData = getUserData(firebaseAuthState);
+      authDispatch({ type: "UPDATE_USER", payload: { ...userData } });
+    } else {
+      //Workaroung for warning in test. TODO: find a better way
+      if (process.env.NODE_ENV !== "test") {
+        authDispatch({ type: "CLEARED_USER" });
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(authStateChanged);
+    return () => unsubscribe();
+  }, []);
 
   return { authState, authDispatch };
 }
