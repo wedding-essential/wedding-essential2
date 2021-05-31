@@ -54,4 +54,28 @@ export const signUpwithGoogle = (authDispatch) => {
     });
 };
 
-export const signOut = () => {};
+export const signOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+};
+
+export const sendVerifyEmail = (setVerifyEmailSent) => {
+  var user = firebase.auth().currentUser;
+  user
+    .sendEmailVerification()
+    .then(function () {
+      setVerifyEmailSent({ sent: true, error: "" });
+      // Email sent.
+    })
+    .catch(function (error) {
+      setVerifyEmailSent({ sent: false, error: error.message });
+      // An error happened.
+    });
+};
