@@ -1,26 +1,7 @@
 import React from "react";
 import { validateAndUpdate, submitHandler } from "../helpers/EmailPasswordForm";
 import authContext from "../contexts/authContext";
-
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "UPDATE_FORM":
-      const { name, value, hasError, error, touched, isFormValid } =
-        action.payload;
-      return {
-        ...state,
-        [name]: { ...state[name], value, hasError, error, touched },
-        isFormValid,
-      };
-    case "HANDLE_FORM_ERROR":
-      return {
-        ...state,
-        isFormValid: { ...state.isFormValid, ...action.payload },
-      };
-    default:
-      return state;
-  }
-};
+import { formReducer } from "../helpers/EmailPasswordForm";
 
 export default function EmailPasswordSignup() {
   const initialValues = {
