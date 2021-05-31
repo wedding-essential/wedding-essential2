@@ -4,6 +4,26 @@ import {
   signInwithEmailAndPassword,
 } from "../helpers/firebaseAuth";
 
+export const formReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_FORM":
+      const { name, value, hasError, error, touched, isFormValid } =
+        action.payload;
+      return {
+        ...state,
+        [name]: { ...state[name], value, hasError, error, touched },
+        isFormValid,
+      };
+    case "HANDLE_FORM_ERROR":
+      return {
+        ...state,
+        isFormValid: { ...state.isFormValid, ...action.payload },
+      };
+    default:
+      return state;
+  }
+};
+
 export const validateInput = (name, value, formState) => {
   let hasError = false,
     error = "";

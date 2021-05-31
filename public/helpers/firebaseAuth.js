@@ -68,6 +68,7 @@ export const signOut = () => {
 
 export const sendVerifyEmail = (setVerifyEmailSent) => {
   var user = firebase.auth().currentUser;
+  firebase.auth().useDeviceLanguage();
   user
     .sendEmailVerification()
     .then(function () {
@@ -77,5 +78,23 @@ export const sendVerifyEmail = (setVerifyEmailSent) => {
     .catch(function (error) {
       setVerifyEmailSent({ sent: false, error: error.message });
       // An error happened.
+    });
+};
+
+export const sendResetPasswordEmail = (emailAddress, dispatch) => {
+  firebase
+    .auth()
+    .sendPasswordResetEmail(emailAddress)
+    .then(function () {
+      dispatch({
+        type: "HANDLE_FORM_ERROR",
+        payload: { value: true, error: "", show: true },
+      });
+    })
+    .catch(function (err) {
+      dispatch({
+        type: "HANDLE_FORM_ERROR",
+        payload: { value: false, error: err.code, show: true },
+      });
     });
 };
