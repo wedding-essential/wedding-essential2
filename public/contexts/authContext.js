@@ -20,7 +20,6 @@ function useProvideAuth() {
         return { ...authState, loading: true };
 
       case "UPDATE_USER":
-        //TODO: auth should be updated with the object from Firebase
         return {
           auth: { ...authState.auth, ...action.payload },
           loading: false,

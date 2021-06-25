@@ -21,11 +21,13 @@ export default function ForgotPasswordForm() {
   }
 
   return (
-    <div className="flex flex-col px-5">
-      <p title="explanation">
-        Please enter a valid email address, and we will send you an email to
-        reset you password.
-      </p>
+    <div className="flex flex-col justify-around px-5 w-full">
+      <header>
+        <p title="explanation">
+          Please enter a valid email address, and we will send you an email to
+          reset you password.
+        </p>
+      </header>
       {state.isFormValid.show && !state.isFormValid.value && (
         <div title="error-form" className="text-red-600 mt-2 ml-2">
           {state.isFormValid.error === "auth/user-not-found" ? (
@@ -68,6 +70,9 @@ export default function ForgotPasswordForm() {
       >
         Send me an email
       </button>
+      <footer>
+        <a href="/login">Oh, I remember now !</a>
+      </footer>
     </div>
   );
 }

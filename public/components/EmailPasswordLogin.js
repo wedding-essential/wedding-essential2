@@ -71,6 +71,9 @@ export default function EmailPasswordLogin() {
           }}
         />
       </label>
+      <a className="text-gray" href="/forgotpwd">
+        Forgot password ?
+      </a>
       <button
         title="login"
         className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
