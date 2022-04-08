@@ -1,4 +1,5 @@
 import firebase from "../../firebase";
+import { createUser } from "../helpers/firebaseUser";
 
 export const signUpwithEmailAndPassword = (formState, dispatch) => {
   firebase
@@ -7,6 +8,12 @@ export const signUpwithEmailAndPassword = (formState, dispatch) => {
       formState.email.value,
       formState.password.value
     )
+    .then((userCredential) => {
+      const user = userCredential.user;
+      const { email, emailVerified } = user;
+      firebase.auth().useDeviceLanguage();
+      user.sendEmailVerification();
+    })
     .catch((err) => {
       dispatch({
         type: "HANDLE_FORM_ERROR",
@@ -19,7 +26,7 @@ export const signInwithEmailAndPassword = (formState, dispatch) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(formState.email.value, formState.password.value)
-    .catch((err) => {
+    .catch(() => {
       dispatch({
         type: "HANDLE_FORM_ERROR",
         payload: {
@@ -62,11 +69,12 @@ export const signOut = () => {
       // Sign-out successful.
     })
     .catch((error) => {
+      console.log(error);
       // An error happened.
     });
 };
 
-export const sendVerifyEmail = (setVerifyEmailSent) => {
+export const sendVerifyEmail = (setVerifyEmailSent = () => {}) => {
   var user = firebase.auth().currentUser;
   firebase.auth().useDeviceLanguage();
   user

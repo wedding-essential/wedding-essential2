@@ -6,7 +6,7 @@ export default function CenteredWindow({ children }) {
       <div
         className="
         my-3
-      bg-white bg-opacity-80 rounded-md shadow-lg w-11/12 p-1 md:w-4/5 lg:w-3/5 md:p-4"
+      bg-white bg-opacity-80 rounded-md shadow-lg w-11/12 p-2 md:w-4/5 lg:w-3/5 md:p-4"
       >
         {children}
       </div>

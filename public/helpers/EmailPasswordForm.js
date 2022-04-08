@@ -19,6 +19,8 @@ export const formReducer = (state, action) => {
         ...state,
         isFormValid: { ...state.isFormValid, ...action.payload },
       };
+    case "CLEAR_FORM":
+      return { ...action.payload };
     default:
       return state;
   }
@@ -117,7 +119,13 @@ export const validateAndUpdate = (
   });
 };
 
-export const submitHandler = (formState, dispatch, formType, authDispatch) => {
+export const submitHandler = (
+  formState,
+  dispatch,
+  formType,
+  authDispatch,
+  initialState
+) => {
   switch (formType) {
     case "signup":
       if (!formState.isFormValid.value) {
@@ -132,6 +140,7 @@ export const submitHandler = (formState, dispatch, formType, authDispatch) => {
       } else {
         authDispatch({ type: "LOADING" });
         signUpwithEmailAndPassword(formState, dispatch);
+        dispatch({ type: "CLEAR_FORM", payload: initialState });
       }
       break;
     case "login":
@@ -147,6 +156,7 @@ export const submitHandler = (formState, dispatch, formType, authDispatch) => {
       } else {
         authDispatch({ type: "LOADING" });
         signInwithEmailAndPassword(formState, dispatch);
+        dispatch({ type: "CLEAR_FORM", payload: initialState });
       }
   }
 };

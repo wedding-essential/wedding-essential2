@@ -28,7 +28,10 @@ if (!firebase.apps.length) {
 }
 
 if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+  var db = firebase.firestore();
   const auth = firebase.auth();
+
   auth.useEmulator("http://localhost:9099");
+  db.useEmulator("localhost", 8080);
 }
 export default firebase;

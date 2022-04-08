@@ -2,8 +2,19 @@ import React from "react";
 import EmailPasswordSignup from "../public/components/EmailPasswordSignup";
 import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
 import CenteredWindow from "../public/components/helpers/CenteredWindow";
+import authContext from "../public/contexts/authContext";
+import { useRouter } from "next/router";
 
 export default function signup() {
+  const router = useRouter();
+  const { authState } = authContext.useAuth();
+
+  React.useEffect(() => {
+    if (authState.auth && !authState.auth.emailVerified) {
+      router.push("/verifyEmail");
+    }
+  }, []);
+
   return (
     <CenteredWindow>
       <header>

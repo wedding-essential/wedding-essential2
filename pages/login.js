@@ -4,6 +4,9 @@ import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
 import CenteredWindow from "../public/components/helpers/CenteredWindow";
 
 export default function login() {
+  //TODO: redirect users with verified
+  //If auth is not null and email is not verified, redirect to verify email
+
   return (
     <CenteredWindow>
       <header>

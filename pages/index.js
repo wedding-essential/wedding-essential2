@@ -1,5 +1,7 @@
 import WELogo from "../public/components/WELogo";
 import GoldenLink from "../public/components/GoldenLink";
+import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
+import EmailPasswordSignup from "../public/components/EmailPasswordSignup";
 
 export default function Home() {
   return (
@@ -9,8 +11,9 @@ export default function Home() {
           <WELogo />
         </div>
         <div className="container flex flex-col mt-6 xl:justify-center xl:w-2/4 xl:px-10">
-          <GoldenLink href="/createWedding">Getting married?</GoldenLink>
-          <GoldenLink href="/attendWedding">Attending a wedding?</GoldenLink>
+          <h1>Organize your wedding</h1>
+          <GoogleSocialLogin />
+          <EmailPasswordSignup />
         </div>
       </main>
     </div>

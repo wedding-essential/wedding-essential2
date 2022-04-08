@@ -78,7 +78,7 @@ export default function EmailPasswordLogin() {
         title="login"
         className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
         onClick={() => {
-          submitHandler(state, dispatch, "login", authDispatch);
+          submitHandler(state, dispatch, "login", authDispatch, initialValues);
         }}
       >
         Log in
