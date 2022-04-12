@@ -5,7 +5,7 @@ import CenteredWindow from "../public/components/helpers/CenteredWindow";
 import authContext from "../public/contexts/authContext";
 import { useRouter } from "next/router";
 
-export default function signup() {
+export default function signup(): JSX.Element {
   const router = useRouter();
   const { authState } = authContext.useAuth();
 
@@ -27,7 +27,7 @@ export default function signup() {
       </section>
       <footer>
         <span className="text-gray">
-          Do you want to login instead ?{" "}
+          Do you want to login instead ?
           <a className="text-black" href="/login">
             Login
           </a>

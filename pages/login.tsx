@@ -3,7 +3,7 @@ import EmailPasswordLogin from "../public/components/EmailPasswordLogin";
 import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
 import CenteredWindow from "../public/components/helpers/CenteredWindow";
 
-export default function login() {
+export default function login(): JSX.Element {
   //TODO: redirect users with verified
   //If auth is not null and email is not verified, redirect to verify email
 
@@ -19,7 +19,7 @@ export default function login() {
       </section>
       <footer>
         <span className="text-gray">
-          Do you need an account ?{" "}
+          Do you need an account ?
           <a className="text-black" href="/signup">
             Signup
           </a>

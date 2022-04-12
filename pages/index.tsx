@@ -1,9 +1,8 @@
 import WELogo from "../public/components/WELogo";
-import GoldenLink from "../public/components/GoldenLink";
 import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
 import EmailPasswordSignup from "../public/components/EmailPasswordSignup";
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-pink-pattern bg-cover">
       <main className="container w-3/5 xl:w-4/5 flex flex-col xl:flex-row">
