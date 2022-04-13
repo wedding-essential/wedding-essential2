@@ -8,7 +8,7 @@ let firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_appId,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_measurementId,
 };
-//process.env.NEXT_PUBLIC_FIREBASE_apiKey
+
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 import firebase from "firebase/app";
@@ -18,11 +18,9 @@ import "firebase/auth";
 import "firebase/firestore";
 
 if (!firebase.apps.length) {
-  if (process.env.NODE_ENV === "test") {
-    firebaseConfig = {
-      apiKey: "myFak3AP1K3y",
-      projectId: "my-fake-wedding",
-    };
+  if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+    firebaseConfig.apiKey= "myFak3AP1K3y"
+    firebaseConfig.projectId = "my-fake-wedding"
   }
   firebase.initializeApp(firebaseConfig);
 }
