@@ -2,13 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+### Development environment
+
+First, run the development server in another terminal:
 
 ```bash
 npm run dev
 # or
 yarn dev
 ```
+
+It will start the Firebase emulator for Auth and Firestore.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

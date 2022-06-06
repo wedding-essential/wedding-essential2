@@ -1,7 +1,333 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .firebase-emulator-warning {
   visibility: hidden;
+}
+
+/* ------------------ */
+/* Custom properties  */
+/* ------------------ */
+
+:root {
+  /* colors */
+  --clr-pearl: 40 43% 96%;
+  --clr-gold: 44 85% 51%;
+  --clr-grey: 0 0% 51%;
+  --clr-dark: 0 0% 29%;
+  --clr-red: 0 100% 27.3%;
+
+  /* font-sizes */
+  --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+  --fs-800: 3.5rem;
+  --fs-700: 1.7rem;
+  --fs-600: 1rem;
+  --fs-500: 1rem;
+  --fs-400: 0.9375rem;
+  --fs-300: 1rem;
+  --fs-200: 0.875rem;
+
+  /* font-families */
+  --ff-serif: "Quattrocento", serif;
+  --ff-sans-serif: "Poppins", sans-serif;
+}
+
+/* Tablet sizes */
+@media (min-width: 35em) {
+  :root {
+    /* font-sizes */
+    --fs-800: 5rem;
+    --fs-700: 2rem;
+    --fs-600: 1.5rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1rem;
+  }
+}
+/* Desktop sizes */
+@media (min-width: 45em) {
+  :root {
+    /* font-sizes */
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-600: 2rem;
+    --fs-500: 1.75rem;
+    --fs-400: 1.125rem;
+  }
+}
+
+/*  */
+
+/* ------------------ */
+/* Utility classes    */
+/* ------------------ */
+
+/* Colors */
+.bg-pearl {
+  background-color: hsl(var(--clr-pearl));
+}
+.bg-gold {
+  background-color: hsl(var(--clr-gold));
+}
+
+.text-gold {
+  color: hsl(var(--clr-gold));
+}
+.text-grey {
+  color: hsl(var(--clr-grey));
+}
+.text-dark {
+  color: hsl(var(--clr-dark));
+}
+.text-red {
+  color: hsl(var(--clr-red));
+}
+
+.letter-spacing-1 {
+  letter-spacing: 4.75px;
+}
+.letter-spacing-2 {
+  letter-spacing: 2.7px;
+}
+.letter-spacing-3 {
+  letter-spacing: 2.35px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* Typography */
+
+.fs-900 {
+  font-size: var(--fs-900);
+}
+.fs-800 {
+  font-size: var(--fs-800);
+}
+.fs-700 {
+  font-size: var(--fs-700);
+}
+.fs-600 {
+  font-size: var(--fs-600);
+}
+.fs-500 {
+  font-size: var(--fs-500);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.fs-300 {
+  font-size: var(--fs-300);
+}
+.fs-200 {
+  font-size: var(--fs-200);
+}
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+  line-height: 1.1;
+}
+.ff-serif {
+  font-family: var(--ff-serif);
+}
+.ff-sans {
+  font-family: var(--ff-sans-serif);
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+.text-align-left {
+  text-align: left;
+}
+
+/* Layout */
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-block {
+  display: block;
+}
+
+/* ------------------ */
+/* Layout             */
+/* ------------------ */
+
+/* Grid */
+.grid-container {
+  display: grid;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(
+        2rem,
+        1fr
+      );
+    gap: var(--container-gap, 2rem);
+  }
+  .grid-container > *:first-child {
+    grid-column: 2;
+  }
+  .grid-container > *:last-child {
+    grid-column: 3;
+  }
+}
+
+/* Flex */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.flow > *:where(:not(:first-child)) {
+  margin-top: var(--flow-space, 1rem);
+  gap: var(--gap, 1rem);
+}
+
+/* ------------------ */
+/* Interactive elements */
+/* ------------------ */
+
+.button {
+  text-decoration: none;
+  background-color: hsl(var(--clr-gold));
+  color: hsl(var(--clr-dark));
+  display: inline-grid;
+  place-items: center;
+  padding: var(--button-padding, 0.75rem 2rem);
+  border-radius: 25px;
+  border: none;
+}
+
+.button:hover,
+.button:focus {
+  background-color: hsl(var(--clr-gold) / 0.5);
+}
+
+.small-button {
+  --button-padding: 0.5rem 1.5rem;
+}
+
+/* ------------------ */
+/* Background         */
+/* ------------------ */
+
+.bg-default {
+  background-image: url(/pink-pattern.svg);
+  background-size: cover;
+}
+
+.bg-wedding {
+  background-image: url(/pexels-terje-sollie-313707.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+/* ------------------ */
+/* Page specific      */
+/* ------------------ */
+
+/* Landing page */
+
+.landing-page {
+  display: grid;
+  height: 100vh;
+}
+
+/* Auth pages   */
+.auth-page {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: min-content 1fr;
+}
+
+.grid-container--auth > * {
+  padding-inline: 2rem;
+}
+
+/* Couple login */
+
+.couple-login-flow {
+  --flow-space: 2rem;
+}
+
+.auth-form {
+  row-gap: 1rem;
+  align-items: center;
+}
+
+.auth-form-label {
+  min-width: 80%;
+}
+
+.auth-form-label > input {
+  border-radius: 20px;
+  padding: 0.5em 1em;
+  justify-items: center;
+}
+
+/* Forgot Password */
+.forgot-pwd-page {
+  display: grid;
+  height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .grid-container--forgot-pwd {
+    grid-template-columns: minmax(2rem, 1fr) minmax(0, 60rem) minmax(2rem, 1fr);
+  }
+
+  .grid-container--forgot-pwd > *:first-child {
+    grid-column: 2;
+  }
+}
+
+.forgot-pwd {
+  padding-inline: 2rem;
+  row-gap: 2rem;
+}
+
+/* Wedding */
+
+.wedding-home-page {
+  display: grid;
+  min-height: 100vh;
+  row-gap: 2rem;
+}
+
+.wedding-home-page > header {
+  min-height: 15vh;
+}
+
+.grid-container--wedding-home {
+  padding-inline: 1rem;
+  place-items: baseline;
+  row-gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid-container--wedding-home {
+    padding-inline: 0;
+  }
+  .grid-container--wedding-home > section:nth-child(2n + 1) {
+    grid-column: 2;
+  }
+  .grid-container--wedding-home > section:nth-child(2n) {
+    grid-column: 3;
+  }
 }

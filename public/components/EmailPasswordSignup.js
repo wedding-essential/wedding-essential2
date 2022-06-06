@@ -2,7 +2,6 @@ import React from "react";
 import { validateAndUpdate, submitHandler } from "../helpers/EmailPasswordForm";
 import authContext from "../contexts/authContext";
 import { formReducer } from "../helpers/EmailPasswordForm";
-import { useRouter } from "next/router";
 
 export default function EmailPasswordSignup() {
   const initialValues = {
@@ -17,19 +16,23 @@ export default function EmailPasswordSignup() {
   const { authDispatch } = authContext.useAuth();
 
   return (
-    <div className="container flex flex-col px-5" title="signup-form">
+    <div className="flex flex-col auth-form" title="signup-form">
       {state.isFormValid.show && !state.isFormValid.value && (
-        <div title="error-form" className="text-red-600 mt-2 ml-2">
+        <div title="error-form" className="text-red fs-300">
           <p>{state.isFormValid.error}</p>
         </div>
       )}
-      <label className="block mt-5" htmlFor="email">
-        <span className="text-gray">Email</span>
+      <label
+        className="auth-form-label d-block text-dark ff-sans flex flex-col"
+        htmlFor="email"
+      >
+        <span>Email</span>
         <input
-          className="form-input mt-1 block w-full"
+          className="form-input mt-3 block w-full"
           type="email"
           name="email"
           id="email"
+          placeholder="youremail@wedding.com"
           value={state.email.value}
           onChange={(e) => {
             validateAndUpdate("email", e.target.value, dispatch, state, false);
@@ -38,17 +41,19 @@ export default function EmailPasswordSignup() {
             validateAndUpdate("email", e.target.value, dispatch, state, true);
           }}
         />
+        {state.email.touched && state.email.hasError && (
+          <div title="error-email" className="text-red fs-200 text-align-left">
+            {state.email.error}
+          </div>
+        )}
       </label>
-      {state.email.touched && state.email.hasError && (
-        <div title="error-email" className="text-red-600 mt-2 ml-2">
-          {state.email.error}
-        </div>
-      )}
 
-      <label className="block mt-5" htmlFor="password">
-        <span className="text-gray">Password</span>
+      <label
+        className="auth-form-label d-block text-dark ff-sans flex flex-col"
+        htmlFor="password"
+      >
+        <span>Password</span>
         <input
-          className="form-input mt-1 block w-full"
           type="password"
           name="password"
           id="password"
@@ -72,17 +77,22 @@ export default function EmailPasswordSignup() {
             );
           }}
         />
+        {state.password.touched && state.password.hasError && (
+          <div
+            title="error-password"
+            className="text-red fs-200 text-align-left"
+          >
+            {state.password.error}
+          </div>
+        )}
       </label>
-      {state.password.touched && state.password.hasError && (
-        <div title="error-password" className="text-red-600 mt-2 ml-2">
-          {state.password.error}
-        </div>
-      )}
 
-      <label className="block mt-5" htmlFor="repeat-password">
-        <span className="text-gray">Repeat password</span>
+      <label
+        className="auth-form-label d-block text-dark ff-sans flex flex-col"
+        htmlFor="repeat-password"
+      >
+        <span>Repeat password</span>
         <input
-          className="form-input mt-1 block w-full"
           type="password"
           name="repeat-password"
           id="repeat-password"
@@ -106,16 +116,16 @@ export default function EmailPasswordSignup() {
             );
           }}
         />
+        {state.repeatPassword.touched && state.repeatPassword.hasError && (
+          <div title="error-repeat" className="text-red fs-200 text-align-left">
+            {state.repeatPassword.error}
+          </div>
+        )}
       </label>
-      {state.repeatPassword.touched && state.repeatPassword.hasError && (
-        <div title="error-repeat" className="text-red-600 mt-2 ml-2">
-          {state.repeatPassword.error}
-        </div>
-      )}
 
       <button
         title="signup"
-        className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center focus:outline-none"
+        className="button small-button"
         onClick={() => {
           submitHandler(state, dispatch, "signup", authDispatch, initialValues);
         }}

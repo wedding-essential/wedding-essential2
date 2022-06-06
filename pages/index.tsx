@@ -1,18 +1,28 @@
-import WELogo from "../public/components/WELogo";
+import Image from "next/image";
 import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
 import EmailPasswordSignup from "../public/components/EmailPasswordSignup";
 
 export default function Home(): JSX.Element {
   return (
-    <div className="h-screen w-screen flex justify-center items-center bg-pink-pattern bg-cover">
-      <main className="container w-3/5 xl:w-4/5 flex flex-col xl:flex-row">
-        <div className="w-full xl:w-2/4 flex justify-center">
-          <WELogo />
+    <div className="landing-page bg-default">
+      <main className="grid-container">
+        <div>
+          <Image src="/we-circle-01.svg" width={350} height={350} />
         </div>
-        <div className="container flex flex-col mt-6 xl:justify-center xl:w-2/4 xl:px-10">
-          <h1>Organize your wedding</h1>
-          <GoogleSocialLogin />
-          <EmailPasswordSignup />
+        <div className="text-align-center flow">
+          <a
+            href="/auth/couple-signup"
+            className="golden-link ff-serif fs-700 text-gold"
+          >
+            Getting Married ?
+          </a>
+          <p className="ff-serif fs-400 text-grey"> OR </p>
+          <a
+            href="/auth/guest-login"
+            className="golden-link ff-serif fs-700 text-gold"
+          >
+            Attending a wedding ?
+          </a>
         </div>
       </main>
     </div>

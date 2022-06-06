@@ -15,16 +15,18 @@ export default function EmailPasswordLogin() {
   const { authDispatch } = authContext.useAuth();
 
   return (
-    <div className="container flex flex-col px-5" title="signup-form">
+    <div className="flex flex-col auth-form" title="login-form">
       {state.isFormValid.show && !state.isFormValid.value && (
-        <div title="error-form" className="text-red-600 mt-2 ml-2">
+        <div title="error-form" className="text-red fs-300">
           <p>{state.isFormValid.error}</p>
         </div>
       )}
-      <label className="block mt-5" htmlFor="email">
-        <span className="text-gray">Email</span>
+      <label
+        className="auth-form-label d-block text-dark ff-sans flex flex-col"
+        htmlFor="email"
+      >
+        <span>Email</span>
         <input
-          className="form-input mt-1 block w-full"
           type="email"
           name="email"
           id="email"
@@ -36,17 +38,19 @@ export default function EmailPasswordLogin() {
             validateAndUpdate("email", e.target.value, dispatch, state, true);
           }}
         />
+        {state.email.touched && state.email.hasError && (
+          <div title="error-email" className="text-red fs-200 text-align-left">
+            {state.email.error}
+          </div>
+        )}
       </label>
-      {state.email.touched && state.email.hasError && (
-        <div title="error-email" className="text-red-600 mt-2 ml-2">
-          {state.email.error}
-        </div>
-      )}
 
-      <label className="block mt-5" htmlFor="password">
-        <span className="text-gray">Password</span>
+      <label
+        className="auth-form-label d-block text-dark ff-sans flex flex-col"
+        htmlFor="password"
+      >
+        <span>Password</span>
         <input
-          className="form-input mt-1 block w-full"
           type="password"
           name="password"
           id="password"
@@ -71,12 +75,10 @@ export default function EmailPasswordLogin() {
           }}
         />
       </label>
-      <a className="text-gray" href="/forgotpwd">
-        Forgot password ?
-      </a>
+      <a href="/forgotpwd">Forgot password ?</a>
       <button
         title="login"
-        className=" bg-gold text-gray w-max py-3 px-5 my-4 mx-auto rounded-full justify-self-center"
+        className="button small-button"
         onClick={() => {
           submitHandler(state, dispatch, "login", authDispatch, initialValues);
         }}

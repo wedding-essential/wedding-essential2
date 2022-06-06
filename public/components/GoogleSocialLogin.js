@@ -3,18 +3,19 @@ import firebase from "../../firebase";
 import authContext from "../contexts/authContext";
 import { signUpwithGoogle } from "../helpers/firebaseAuth";
 
-export default function GoogleSocialLogin() {
+export default function GoogleSocialLogin({ children }) {
   const { authDispatch } = authContext.useAuth();
   const [error, setError] = React.useState();
   return (
     <button
       title="google-login"
-      className="uppercase px-4 py-2 mt-3 text-white rounded bg-red-800 hover:bg-red-900"
+      aria-selected="false"
+      className="d-block button text-dark ff-sans fs-400 bg-gold "
       onClick={() => {
         signUpwithGoogle(authDispatch);
       }}
     >
-      Google
+      {children}
     </button>
   );
 }

@@ -4,8 +4,10 @@ import CenteredWindow from "../public/components/helpers/CenteredWindow";
 
 export default function forgotpwd(): JSX.Element {
   return (
-    <CenteredWindow>
-      <ForgotPasswordForm />
-    </CenteredWindow>
+    <div className="forgot-pwd-page bg-default">
+      <main className="grid-container grid-container--forgot-pwd text-align-center ff-sans">
+        <ForgotPasswordForm />
+      </main>
+    </div>
   );
 }
