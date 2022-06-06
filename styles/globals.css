@@ -194,6 +194,9 @@
   justify-content: space-around;
 }
 
+.justify-items-around {
+  justify-items: space-around;
+}
 .flow > *:where(:not(:first-child)) {
   margin-top: var(--flow-space, 1rem);
   gap: var(--gap, 1rem);
@@ -307,11 +310,18 @@
 .wedding-home-page {
   display: grid;
   min-height: 100vh;
-  row-gap: 2rem;
+  row-gap: 4rem;
 }
 
-.wedding-home-page > header {
+.wedding-header {
   min-height: 15vh;
+  display: grid;
+  align-items: flex-end;
+  grid-template-columns: minmax(2rem, 1fr) minmax(0, 85rem) minmax(2rem, 1fr);
+}
+
+.wedding-header > div:first-child {
+  grid-column: 2;
 }
 
 .grid-container--wedding-home {
@@ -329,5 +339,14 @@
   }
   .grid-container--wedding-home > #timeline {
     grid-column: 3;
+    grid-row: 1 / span 3;
   }
+}
+
+#rsvp {
+  width: 100%;
+}
+.rsvp-list {
+  width: 100%;
+  justify-content: space-around;
 }

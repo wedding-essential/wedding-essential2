@@ -1,11 +1,15 @@
+import { Avatar } from "@material-ui/core";
 import React from "react";
+import WeddingTimeline from "../../public/components/wedding/WeddingTimeline";
+import SpeedDialAvatar from "../../public/components/wedding/SpeedDialAvatar";
+
+const mockEvents = [{ date: Date.now() }];
 
 export default function weddingHome() {
   return (
     <div className="wedding-home-page bg-default">
-      <header className="bg-wedding">
-        <div id="avatar"></div>
-        <div id="countdown"></div>
+      <header className="bg-wedding wedding-header">
+        <SpeedDialAvatar avatarImage="mockCoupleAvatar.png" />
       </header>
       <main className="grid-container grid-container--wedding-home">
         <section className="flow" id="story">
@@ -23,17 +27,29 @@ export default function weddingHome() {
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
             Timeline
           </h2>
-          {/* Material UI timeline */}
+          <WeddingTimeline events={[]} />
         </section>
         <section className="flow" id="rsvp">
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
             RSVP
           </h2>
-          <div>
-            <div>0 invited</div>
-            <div>0 yes</div>
-            <div>0 no</div>
-            <div>0 maybe</div>
+          <div className="rsvp-list flex ff-sans ">
+            <div className="text-align-center flow">
+              <span className="button small-button ff-serif">0</span>
+              <span className="d-block">invited</span>
+            </div>
+            <div className="text-align-center flow">
+              <span className="button small-button ff-serif">0</span>
+              <span className="d-block">Yes</span>
+            </div>
+            <div className="text-align-center flow">
+              <span className="button small-button ff-serif">0</span>
+              <span className="d-block">No</span>
+            </div>
+            <div className="text-align-center flow">
+              <span className="button small-button ff-serif">0</span>
+              <span className="d-block">Maybe</span>
+            </div>
           </div>
         </section>
         <section className="flow" id="dresscode">
