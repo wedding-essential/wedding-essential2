@@ -14,6 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
           @import
           url('https://fonts.googleapis.com/css2?family=Quattrocento&display=swap');
+          @import
+          url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+          ) @import
+          url(https://fonts.googleapis.com/icon?family=Material+Icons");
         </style>
       </Head>
       <authContext.AuthProvider>
