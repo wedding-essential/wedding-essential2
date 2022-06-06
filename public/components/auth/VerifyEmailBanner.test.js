@@ -1,7 +1,7 @@
 import React from "react";
 import VerifyEmailBanner from "./VerifyEmailBanner";
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import authContext from "../contexts/authContext";
+import authContext from "../../contexts/authContext";
 
 const setup = (authProviderValue) => {
   return render(

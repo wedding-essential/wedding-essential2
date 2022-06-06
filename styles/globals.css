@@ -324,10 +324,10 @@
   .grid-container--wedding-home {
     padding-inline: 0;
   }
-  .grid-container--wedding-home > section:nth-child(2n + 1) {
+  .grid-container--wedding-home > section:not(#timeline) {
     grid-column: 2;
   }
-  .grid-container--wedding-home > section:nth-child(2n) {
+  .grid-container--wedding-home > #timeline {
     grid-column: 3;
   }
 }
