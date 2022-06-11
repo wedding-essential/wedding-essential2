@@ -7,60 +7,58 @@ import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import Typography from "@material-ui/core/Typography";
+import { Event } from "../../../app_types";
 
-export default function OppositeContentTimeline({ events }) {
-  return (
-    <React.Fragment>
-      <Timeline align="alternate">
-        <TimelineItem>
-          <TimelineOppositeContent>
-            <Typography color="textSecondary">09:30 am</Typography>
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot />
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Typography>Eat</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent>
-            <Typography color="textSecondary">10:00 am</Typography>
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot />
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Typography>Code</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent>
-            <Typography color="textSecondary">12:00 am</Typography>
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot />
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Typography>Sleep</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent>
-            <Typography color="textSecondary">9:00 am</Typography>
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot />
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Typography>Repeat</Typography>
-          </TimelineContent>
-        </TimelineItem>
-      </Timeline>
-    </React.Fragment>
-  );
+function buildTimelineItems(events: Event[]) {
+  return events.map((event) => {
+    return (
+      <TimelineItem key={event.id}>
+        <TimelineOppositeContent>
+          <Typography color="textSecondary">
+            {event.date.toLocaleTimeString()}
+          </Typography>
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineDot />
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent>
+          <Typography>{event.name}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+    );
+  });
+}
+
+function buildTimelines(events: Event[]) {
+  // Find different days and sort them
+  const days = events
+    .map((event) => event.date.toLocaleDateString())
+    .filter((date, index, array) => {
+      return array.indexOf(date) === index;
+    })
+    .sort((a, b) => {
+      return new Date(a).getTime() - new Date(b).getTime();
+    });
+
+  return days.map((day, idx) => {
+    return (
+      <div key={(Math.random() * idx).toString()}>
+        <h3 className="text-align-center ff-sans">
+          {new Date(day).toLocaleDateString(undefined, {
+            dateStyle: "full",
+          })}
+        </h3>
+        <Timeline>
+          {buildTimelineItems(
+            events.filter((event) => event.date.toLocaleDateString() === day)
+          )}
+        </Timeline>
+      </div>
+    );
+  });
+}
+
+export default function WeddingTimeline({ events }) {
+  return <div>{buildTimelines(events)};</div>;
 }
