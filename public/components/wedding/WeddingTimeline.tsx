@@ -15,7 +15,7 @@ function buildTimelineItems(events: Event[]) {
       <TimelineItem key={event.id}>
         <TimelineOppositeContent>
           <Typography color="textSecondary">
-            {event.date.toLocaleTimeString()}
+            {event.date.toLocaleTimeString(undefined, { timeStyle: "short" })}
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
