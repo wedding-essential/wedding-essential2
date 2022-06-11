@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
-import authContext from "../contexts/authContext";
-import { signUpwithGoogle } from "../helpers/firebaseAuth";
+import firebase from "../../../firebase";
+import authContext from "../../contexts/authContext";
+import { signUpwithGoogle } from "../../helpers/firebaseAuth";
 
 export default function GoogleSocialLogin({ children }) {
   const { authDispatch } = authContext.useAuth();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import GoogleSocialLogin from "../../public/components/GoogleSocialLogin";
-import EmailPasswordSignup from "../../public/components/EmailPasswordSignup";
+import GoogleSocialLogin from "../../public/components/auth/GoogleSocialLogin";
+import EmailPasswordSignup from "../../public/components/auth/EmailPasswordSignup";
 
 export default function CoupleSignup(): JSX.Element {
   const [emailFormIsOpen, setEmailFormIsOpen] = useState(false);

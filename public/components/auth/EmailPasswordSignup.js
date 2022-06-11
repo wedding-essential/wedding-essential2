@@ -1,7 +1,10 @@
 import React from "react";
-import { validateAndUpdate, submitHandler } from "../helpers/EmailPasswordForm";
-import authContext from "../contexts/authContext";
-import { formReducer } from "../helpers/EmailPasswordForm";
+import {
+  validateAndUpdate,
+  submitHandler,
+} from "../../helpers/EmailPasswordForm";
+import authContext from "../../contexts/authContext";
+import { formReducer } from "../../helpers/EmailPasswordForm";
 
 export default function EmailPasswordSignup() {
   const initialValues = {
