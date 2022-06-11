@@ -29,9 +29,6 @@ export default function SpeedDialAvatar({ avatarImage }) {
       <SpeedDial
         sx={{
           width: "fit-content",
-          position: "relative",
-          left: "3%",
-          top: "calc(15vh + 70px)",
         }}
         ariaLabel="Avatar Speed Dial"
         icon={
@@ -41,17 +38,18 @@ export default function SpeedDialAvatar({ avatarImage }) {
               height: 100,
               border: "4px solid hsl(44 85% 51%)",
             }}
-            alt="CouPle"
+            alt="Couple avatar"
             src={`../../${avatarImage}`}
           ></Avatar>
         }
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
-        direction="down"
+        direction="right"
       >
         {actions.map((action) => (
           <SpeedDialAction
+            sx={{ marginLeft: "1em" }}
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
