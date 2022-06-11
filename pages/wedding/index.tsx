@@ -1,9 +1,12 @@
-import { Avatar } from "@material-ui/core";
 import React from "react";
 import WeddingTimeline from "../../public/components/wedding/WeddingTimeline";
 import SpeedDialAvatar from "../../public/components/wedding/SpeedDialAvatar";
+import { mockEvents } from "../../mocks/mockEvents";
+import { mockWeddings } from "../../mocks/mockWeddings";
+import { mockRSVP } from "../../mocks/mockRSVP";
+import { RSVP_STATUS } from "../../constants";
 
-const mockEvents = [{ date: Date.now() }];
+const thisWedding = mockWeddings[0];
 
 export default function weddingHome() {
   return (
@@ -16,18 +19,13 @@ export default function weddingHome() {
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
             Our Story
           </h2>
-          <p className="ff-sans ff-200">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Repudiandae, mollitia. Veritatis recusandae unde sequi fugiat odit
-            fuga! Repellendus voluptas fugit nihil ea aut, obcaecati iusto natus
-            eius reprehenderit labore quisquam!
-          </p>
+          <p className="ff-sans ff-200">{thisWedding.story}</p>
         </section>
-        <section className="flow" id="timeline">
+        <section className="flow timeline" id="timeline">
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
             Timeline
           </h2>
-          <WeddingTimeline events={[]} />
+          <WeddingTimeline events={mockEvents} />
         </section>
         <section className="flow" id="rsvp">
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
@@ -35,20 +33,37 @@ export default function weddingHome() {
           </h2>
           <div className="rsvp-list flex ff-sans ">
             <div className="text-align-center flow">
-              <span className="button small-button ff-serif">0</span>
-              <span className="d-block">invited</span>
+              <span className="button small-button ff-sans fs-500">
+                {mockRSVP.length}
+              </span>
+              <span className="d-block fs-400">invited</span>
             </div>
             <div className="text-align-center flow">
-              <span className="button small-button ff-serif">0</span>
-              <span className="d-block">Yes</span>
+              <span className="button small-button ff-sans fs-500">
+                {
+                  mockRSVP.filter((rsvp) => rsvp.status === RSVP_STATUS.YES)
+                    .length
+                }
+              </span>
+              <span className="d-block fs-400">Yes</span>
             </div>
             <div className="text-align-center flow">
-              <span className="button small-button ff-serif">0</span>
-              <span className="d-block">No</span>
+              <span className="button small-button ff-sans fs-500">
+                {
+                  mockRSVP.filter((rsvp) => rsvp.status === RSVP_STATUS.NO)
+                    .length
+                }
+              </span>
+              <span className="d-block fs-400">No</span>
             </div>
             <div className="text-align-center flow">
-              <span className="button small-button ff-serif">0</span>
-              <span className="d-block">Maybe</span>
+              <span className="button small-button ff-sans fs-500">
+                {
+                  mockRSVP.filter((rsvp) => rsvp.status === RSVP_STATUS.MAYBE)
+                    .length
+                }
+              </span>
+              <span className="d-block fs-400">Maybe</span>
             </div>
           </div>
         </section>
@@ -56,12 +71,7 @@ export default function weddingHome() {
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
             Dresscode
           </h2>
-          <p className="ff-sans ff-200">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia,
-            dicta quibusdam accusamus error nemo beatae, nostrum dolorum dolores
-            dignissimos iusto commodi. Architecto voluptatem sunt corporis rem,
-            nostrum iusto velit. Consequatur.
-          </p>
+          <p className="ff-sans ff-200">{thisWedding.dresscode}</p>
         </section>
         <section className="flow" id="witnesses">
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
