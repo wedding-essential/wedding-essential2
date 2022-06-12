@@ -9,6 +9,10 @@ import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import Typography from "@material-ui/core/Typography";
 import { Event } from "../../../app_types";
 
+/* TODO */
+/* When an event is passed the dot is outlined. Dot and Connectors are grey */
+/* When an event is to come, the dot is full. Dot and Connectors are gold */
+
 function buildTimelineItems(events: Event[]) {
   return events.map((event) => {
     return (
@@ -19,7 +23,7 @@ function buildTimelineItems(events: Event[]) {
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineDot />
+          <TimelineDot variant="outlined" />
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
