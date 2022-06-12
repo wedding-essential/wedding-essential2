@@ -5,6 +5,7 @@ import { mockEvents } from "../../mocks/mockEvents";
 import { mockWeddings } from "../../mocks/mockWeddings";
 import { mockRSVP } from "../../mocks/mockRSVP";
 import { RSVP_STATUS } from "../../constants";
+import { mockUsers } from "../../mocks/mockUsers";
 
 const thisWedding = mockWeddings[0];
 
@@ -77,12 +78,16 @@ export default function weddingHome() {
           <h2 className="ff-serif ff-500 text-gold letter-spacing-2 uppercase">
             Witnesses
           </h2>
-          <p className="ff-sans ff-200">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam quam
-            et ratione ut veritatis vitae necessitatibus sed rerum non sapiente
-            doloremque, dolorum deserunt rem? Iusto excepturi quisquam autem
-            odio cupiditate.
-          </p>
+
+          {mockUsers
+            .filter((user) => thisWedding.witnesses.includes(user.personaId))
+            .map((user) => {
+              return (
+                <div>
+                  <h3>{`${user.firstName} ${user.lastName}`}</h3>
+                </div>
+              );
+            })}
         </section>
       </main>
     </div>
