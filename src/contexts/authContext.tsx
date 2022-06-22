@@ -2,10 +2,8 @@ import React from "react";
 import firebase from "../../firebase";
 
 interface AuthContext {
-  displayName: string;
-  email: string;
-  emailVerified: Boolean;
-  token: string;
+  AuthProvider: any;
+  useAuth: any;
 }
 
 const authContext = React.createContext<AuthContext | null>(null);

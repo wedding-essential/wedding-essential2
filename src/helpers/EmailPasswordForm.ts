@@ -2,7 +2,7 @@ import firebase from "../../firebase";
 import {
   signUpwithEmailAndPassword,
   signInwithEmailAndPassword,
-} from "../helpers/firebaseAuth";
+} from "./firebaseAuth";
 
 export const formReducer = (state, action) => {
   switch (action.type) {

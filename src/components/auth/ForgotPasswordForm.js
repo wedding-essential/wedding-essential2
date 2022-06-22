@@ -1,6 +1,9 @@
 import React from "react";
-import { validateAndUpdate, formReducer } from "../helpers/EmailPasswordForm";
-import { sendResetPasswordEmail } from "../helpers/firebaseAuth";
+import {
+  validateAndUpdate,
+  formReducer,
+} from "../../helpers/EmailPasswordForm";
+import { sendResetPasswordEmail } from "../../helpers/firebaseAuth";
 
 export default function ForgotPasswordForm() {
   const initialValues = {
@@ -81,7 +84,7 @@ export default function ForgotPasswordForm() {
         </button>
       </div>
       <footer>
-        <a href="/login">Oh, I remember now !</a>
+        <a href="/auth/couple-login">Oh, I remember now !</a>
       </footer>
     </div>
   );
