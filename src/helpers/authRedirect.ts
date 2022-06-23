@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { AuthState } from "../contexts/authContext";
 
 export default function authRedirect(context: AuthState, router: any) {
-  const { auth, isLoading } = context;
+  const { auth, loading } = context;
 
-  if (auth && !isLoading && !auth.emailVerified) {
+  if (auth && !loading && !auth.emailVerified) {
     router.push("/auth/verifyEmail");
   }
   if (auth) {

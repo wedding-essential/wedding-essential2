@@ -106,3 +106,12 @@ export const sendResetPasswordEmail = (emailAddress, dispatch) => {
       });
     });
 };
+
+export const getAuthToken = () => {
+  firebase
+    .auth()
+    .getIdToken()
+    .then(function (token) {
+      return token;
+    });
+};

@@ -14,8 +14,6 @@ export default function login(): JSX.Element {
   const { authState } = authContext.useAuth();
 
   React.useEffect(() => {
-    console.log({ authState });
-
     authRedirectHook(authState, router);
   }, [authState.auth]);
 

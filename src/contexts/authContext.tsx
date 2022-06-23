@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 
 export interface AuthState {
   auth: any;
-  isLoading: boolean;
+  loading: boolean;
 }
 export interface AuthContext {
   authState: AuthState;

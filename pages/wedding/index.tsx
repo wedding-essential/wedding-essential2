@@ -10,18 +10,11 @@ import Button from "@material-ui/core/Button";
 import { signOut } from "../../src/helpers/firebaseAuth";
 import { useRouter } from "next/router";
 import authContext from "../../src/contexts/authContext";
-import protectedRoutes from "../../src/helpers/protectedRoute";
+import protectedRoute from "../../src/helpers/protectedRoute";
 
 const thisWedding = mockWeddings[0];
 
-export default function weddingHome(): JSX.Element {
-  const router = useRouter();
-  const { authState } = authContext.useAuth();
-
-  useEffect(() => {
-    protectedRoutes(authState, router);
-  }, [authState.auth]);
-
+function weddingHome(): JSX.Element {
   return (
     <div className="page wedding-home-page">
       <header className="bg-wedding wedding-header">
@@ -106,3 +99,5 @@ export default function weddingHome(): JSX.Element {
     </div>
   );
 }
+
+export default protectedRoute(weddingHome);

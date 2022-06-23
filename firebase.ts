@@ -18,15 +18,18 @@ import "firebase/auth";
 import "firebase/firestore";
 
 if (!firebase.apps.length) {
-  if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-    firebaseConfig.apiKey= "myFak3AP1K3y"
-    firebaseConfig.projectId = "my-fake-wedding"
+  if (
+    process.env.NODE_ENV === "test" ||
+    process.env.NODE_ENV === "development"
+  ) {
+    firebaseConfig.apiKey = "myFak3AP1K3y";
+    firebaseConfig.projectId = "my-fake-wedding";
   }
   firebase.initializeApp(firebaseConfig);
 }
 
 if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-  var db = firebase.firestore();
+  const db = firebase.firestore();
   const auth = firebase.auth();
 
   auth.useEmulator("http://localhost:9099");
