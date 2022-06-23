@@ -1,12 +1,8 @@
-import React from "react";
-import { useRouter } from "next/router";
+import { AuthState } from "../contexts/authContext";
 
-export default function protectedRoutes(user) {
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-  });
+export default function protectedRoutes(authState: AuthState, router: any) {
+  const { auth } = authState;
+  if (!auth) {
+    router.push("/");
+  }
 }

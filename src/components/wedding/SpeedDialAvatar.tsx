@@ -11,6 +11,7 @@ const actions = [
   { icon: <HomeRoundedIcon />, name: "Home" },
   { icon: <PeopleRoundedIcon />, name: "Guests" },
   { icon: <ImageRoundedIcon />, name: "Gallery" },
+  { icon: <ImageRoundedIcon />, name: "Logout" },
 ];
 
 export default function SpeedDialAvatar({ avatarImage }) {

@@ -1,35 +1,49 @@
-import React from "react";
-import { sendVerifyEmail } from "../helpers/firebaseAuth";
-import authContext from "../contexts/authContext";
+import React, { useEffect, useState } from "react";
+import { sendVerifyEmail } from "../../helpers/firebaseAuth";
+import authContext from "../../contexts/authContext";
 
 export default function VerifyEmailBanner() {
-  const [verifyEmailSent, setVerifyEmailSent] = React.useState({
+  const [isVisible, setIsVisible] = useState(true);
+  const [verifyEmailSent, setVerifyEmailSent] = useState({
     sent: false,
     error: "",
   });
   const { auth, loading } = authContext.useAuth().authState;
 
-  if (!auth) {
-    return null;
-  }
+  useEffect(() => {
+    if (
+      window.location.pathname === "/auth/verifyEmail" ||
+      window.location.pathname === "/"
+    ) {
+      setIsVisible(false);
+    }
 
-  if (auth && auth.emailVerified && !loading) {
-    return null;
+    if (!auth) {
+      setIsVisible(false);
+    }
+
+    if (auth && auth?.emailVerified && !loading) {
+      setIsVisible(false);
+    }
+  }, [auth]);
+
+  if (!isVisible) {
+    return <></>;
   }
 
   return (
-    <div title="banner" className="bg-red-400 py-3 cursor-default">
+    <div title="banner" className="ff-sans fs-400 text-align-center">
       {!verifyEmailSent.sent && !verifyEmailSent.error && (
         <p className="text-center text-lg">
-          Your email is not verified.&nbsp;
+          Your email is not verified.&nbsp; Please check your mailbox.&nbsp;
           <span
             title="send-email"
-            className="text-white cursor-pointer"
+            className="ff-serif"
             onClick={() => {
               sendVerifyEmail(setVerifyEmailSent);
             }}
           >
-            Send me a verification email.
+            Send new verification.
           </span>
         </p>
       )}

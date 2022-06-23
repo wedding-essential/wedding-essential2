@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import GoogleSocialLogin from "../../public/components/auth/GoogleSocialLogin";
-import EmailPasswordSignup from "../../public/components/auth/EmailPasswordSignup";
+import GoogleSocialLogin from "../../src/components/auth/GoogleSocialLogin";
+import EmailPasswordSignup from "../../src/components/auth/EmailPasswordSignup";
+import authRedirect from "../../src/helpers/authRedirect";
+import authContext from "../../src/contexts/authContext";
+import { useRouter } from "next/router";
 
 export default function CoupleSignup(): JSX.Element {
   const [emailFormIsOpen, setEmailFormIsOpen] = useState(false);
+  const { authState } = authContext.useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    authRedirect(authState, router);
+  }, [authState]);
 
   return (
-    <div className="auth-page bg-default">
-      <header>
-        <a
-          className="d-block text-align-right fs-500 ff-sans"
-          href="/auth/couple-login"
-        >
-          Already planning a wedding?
-        </a>
-      </header>
+    <div className="page auth-page">
       <main className="grid-container grid-container--auth text-align-center ff-sans">
         <div className="flow couple-login-flow">
-          <h1 className="ff-serif fs-700">Create a new wedding plan</h1>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim
-            pariatur possimus magni, suscipit accusantium dolor, necessitatibus
-            aut, dolores beatae ad totam maxime nesciunt est repudiandae
-            corrupti accusamus fugiat veritatis neque!
-          </p>
+          <h1 className="ff-serif fs-700">
+            Start planning the best day of your life
+          </h1>
+          {/* TODO improve description on sign up page */}
+          <p>Wedding planning is the key to a successful wedding.</p>
+          <ul>
+            <li>plan and share your wedding with your family and friends</li>
+            <li>manage & send your invitations in a single place</li>
+            <li>track your wedding progress</li>
+          </ul>
+          <h2>Create an account now</h2>
           <div className="flex justify-around">
             <GoogleSocialLogin>Sign up with Google</GoogleSocialLogin>
             <button
@@ -33,6 +38,14 @@ export default function CoupleSignup(): JSX.Element {
             >
               Sign up with email
             </button>
+          </div>
+          <div>
+            <p>
+              Already have an account?
+              <a className="ff-sans" href="/auth/couple-login">
+                Login
+              </a>
+            </p>
           </div>
         </div>
         <div>

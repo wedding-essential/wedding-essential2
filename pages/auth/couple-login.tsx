@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import GoogleSocialLogin from "../../public/components/GoogleSocialLogin";
-import EmailPasswordLogin from "../../public/components/EmailPasswordLogin";
-import EmailPasswordSignup from "../../public/components/EmailPasswordSignup";
-import CenteredWindow from "../../public/components/helpers/CenteredWindow";
+import GoogleSocialLogin from "../../src/components/auth/GoogleSocialLogin";
+import EmailPasswordLogin from "../../src/components/auth/EmailPasswordLogin";
+import authContext from "../../src/contexts/authContext";
+import { useRouter } from "next/router";
+import authRedirectHook from "../../src/helpers/authRedirect";
 
 export default function login(): JSX.Element {
   const [emailFormIsOpen, setEmailFormIsOpen] = useState(false);
+  const router = useRouter();
   //TODO: redirect users with verified
   //If auth is not null and email is not verified, redirect to verify email
+  const { authState } = authContext.useAuth();
+
+  React.useEffect(() => {
+    console.log({ authState });
+
+    authRedirectHook(authState, router);
+  }, [authState.auth]);
 
   return (
-    <div className="auth-page bg-default">
-      <header>
-        <a className="fs-500 ff-sans" href="/auth/couple-signup">
-          Are you a guest?
-        </a>
-      </header>
+    <div className="page auth-page">
       <main className="grid-container grid-container--auth text-align-center ff-sans">
         <div className="flow couple-login-flow">
           <h1 className="ff-serif fs-700">Continue planning your wedding</h1>
@@ -35,6 +39,12 @@ export default function login(): JSX.Element {
               Login with email
             </button>
           </div>
+          <p>
+            No account?{" "}
+            <a className="ff-sans" href="/auth/couple-signup">
+              Create one
+            </a>
+          </p>
         </div>
         {emailFormIsOpen ? (
           <EmailPasswordLogin />

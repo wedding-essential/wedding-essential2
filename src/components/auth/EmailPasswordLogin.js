@@ -109,7 +109,7 @@ export default function EmailPasswordLogin() {
             helperText={state.password.error}
           />
         </FormControl>
-        <a classname="fs-800 ff-serif" href="/forgotpwd">
+        <a classname="fs-800 ff-serif" href="/auth/forgotpwd">
           Reset password
         </a>
         <button

@@ -1,10 +1,8 @@
 import Image from "next/image";
-import GoogleSocialLogin from "../public/components/GoogleSocialLogin";
-import EmailPasswordSignup from "../public/components/EmailPasswordSignup";
 
 export default function Home(): JSX.Element {
   return (
-    <div className="landing-page bg-default">
+    <div className="page">
       <main className="grid-container">
         <div>
           <Image src="/we-circle-01.svg" width={350} height={350} />

@@ -1,18 +1,31 @@
-import React from "react";
-import WeddingTimeline from "../../public/components/wedding/WeddingTimeline";
-import SpeedDialAvatar from "../../public/components/wedding/SpeedDialAvatar";
+import React, { useEffect } from "react";
+import WeddingTimeline from "../../src/components/wedding/WeddingTimeline";
+import SpeedDialAvatar from "../../src/components/wedding/SpeedDialAvatar";
 import { mockEvents } from "../../mocks/mockEvents";
 import { mockWeddings } from "../../mocks/mockWeddings";
 import { mockRSVP } from "../../mocks/mockRSVP";
 import { RSVP_STATUS } from "../../constants";
 import { mockUsers } from "../../mocks/mockUsers";
+import Button from "@material-ui/core/Button";
+import { signOut } from "../../src/helpers/firebaseAuth";
+import { useRouter } from "next/router";
+import authContext from "../../src/contexts/authContext";
+import protectedRoutes from "../../src/helpers/protectedRoute";
 
 const thisWedding = mockWeddings[0];
 
-export default function weddingHome() {
+export default function weddingHome(): JSX.Element {
+  const router = useRouter();
+  const { authState } = authContext.useAuth();
+
+  useEffect(() => {
+    protectedRoutes(authState, router);
+  }, [authState.auth]);
+
   return (
-    <div className="wedding-home-page bg-default">
+    <div className="page wedding-home-page">
       <header className="bg-wedding wedding-header">
+        <Button onClick={signOut}>Logout</Button>
         <SpeedDialAvatar avatarImage="mockCoupleAvatar.png" />
       </header>
       <main className="grid-container grid-container--wedding-home">

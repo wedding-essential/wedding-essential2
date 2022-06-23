@@ -1,12 +1,14 @@
 import "../styles/globals.css";
 import "../styles/reset.css";
 import Head from "next/head";
-import authContext from "../public/contexts/authContext";
+import authContext from "../src/contexts/authContext";
 import { AppProps } from "next/app";
+import Container from "@mui/material/Container";
+import VerifyEmailBanner from "../src/components/auth/VerifyEmailBanner";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <div className="bg-default">
       <Head>
         <title>Wedding Essentials</title>
         <style>
@@ -21,9 +23,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         </style>
       </Head>
       <authContext.AuthProvider>
-        <Component {...pageProps} />
+        <Container>
+          <VerifyEmailBanner />
+          <Component {...pageProps} />
+        </Container>
       </authContext.AuthProvider>
-    </>
+    </div>
   );
 }
 

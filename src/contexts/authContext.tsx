@@ -1,9 +1,13 @@
 import React from "react";
 import firebase from "../../firebase";
 
-interface AuthContext {
-  AuthProvider: any;
-  useAuth: any;
+export interface AuthState {
+  auth: any;
+  isLoading: boolean;
+}
+export interface AuthContext {
+  authState: AuthState;
+  authDispatch: any;
 }
 
 const authContext = React.createContext<AuthContext | null>(null);
@@ -41,8 +45,24 @@ function useProvideAuth() {
   });
 
   const getUserData = (firebaseUser) => {
-    const { displayName, email, emailVerified, token } = firebaseUser;
-    return { displayName, email, emailVerified, token };
+    const {
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      metadata,
+      photoURL,
+      multiFactor,
+    } = firebaseUser;
+    return {
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      metadata,
+      photoURL,
+      multiFactor,
+    };
   };
 
   const authStateChanged = (firebaseAuthState) => {
