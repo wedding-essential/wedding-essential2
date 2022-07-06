@@ -6,11 +6,14 @@ export interface AuthState {
   loading: boolean;
 }
 export interface AuthContext {
-  authState: AuthState;
+  authState: AuthState | null;
   authDispatch: any;
 }
 
-const authContext = React.createContext<AuthContext | null>(null);
+const authContext = React.createContext<AuthContext | null>({
+  authState: null,
+  authDispatch: null,
+});
 
 function useAuth() {
   const context = React.useContext(authContext);
@@ -41,7 +44,7 @@ function useProvideAuth() {
 
   const [authState, authDispatch] = React.useReducer(authReducer, {
     auth: null,
-    loading: false,
+    loading: true,
   });
 
   const getUserData = (firebaseUser) => {

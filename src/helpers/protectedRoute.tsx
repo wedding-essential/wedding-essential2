@@ -1,17 +1,20 @@
 import authContext from "../contexts/authContext";
 import { useRouter } from "next/router";
 import Loading from "../components/Loading";
+import { useEffect } from "react";
 
 export default function protectedRoute(WrappedComponent) {
-  return (props) => {
+  return (props: any) => {
     const { auth, loading } = authContext.useAuth().authState;
+    const router = useRouter();
+    console.log(auth, loading);
 
-    // If there is no auth object we redirect to "/" page.
-    if (auth && !loading) {
-      return <WrappedComponent {...props} />;
-    }
-    // If this is an accessToken we just render the component that was passed with all its props
-    return <Loading />;
-    // If we are on server, return null
+    useEffect(() => {
+      if (!loading && !auth) {
+        router.push("/");
+      }
+    }, [auth, loading]);
+
+    return <WrappedComponent {...props} />;
   };
 }
