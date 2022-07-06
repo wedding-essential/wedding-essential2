@@ -15,7 +15,7 @@ export interface Event {
 
 export interface Wedding {
   weddingId: string;
-  couple: string[];
+  name: string;
   story: string;
   events: Event[];
   dresscode: string;
@@ -32,6 +32,8 @@ export interface Rsvp {
   weddingId: string;
   userId: string;
   status: RsvpStatus;
+  role: RoleType[];
 }
 
 export type RsvpStatus = "yes" | "no" | "maybe";
+export type RoleType = "guest" | "couple" | "organizer" | "spouse";

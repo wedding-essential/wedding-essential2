@@ -8,8 +8,6 @@ import { RSVP_STATUS } from "../../constants";
 import { mockUsers } from "../../mocks/mockUsers";
 import Button from "@material-ui/core/Button";
 import { signOut } from "../../src/helpers/firebaseAuth";
-import { useRouter } from "next/router";
-import authContext from "../../src/contexts/authContext";
 import protectedRoute from "../../src/helpers/protectedRoute";
 
 const thisWedding = mockWeddings[0];
