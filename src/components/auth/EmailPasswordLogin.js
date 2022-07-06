@@ -6,9 +6,6 @@ import {
 import authContext from "../../contexts/authContext";
 import { formReducer } from "../../helpers/EmailPasswordForm";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
@@ -43,48 +40,42 @@ export default function EmailPasswordLogin() {
             <p>{state.isFormValid.error}</p>
           </div>
         )}
-        <FormControl>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            id="email"
-            value={state.email.value}
-            onChange={(e) => {
-              validateAndUpdate(
-                "email",
-                e.target.value,
-                dispatch,
-                state,
-                false
-              );
-            }}
-            onBlur={(e) => {
-              validateAndUpdate("email", e.target.value, dispatch, state, true);
-            }}
-            error={state.email.hasError}
-            helperText={state.email.error}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <Input
-            label="password"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            id="password"
-            value={state.password.value}
-            onChange={(e) => {
-              validateAndUpdate(
-                "password",
-                e.target.value,
-                dispatch,
-                state,
-                false
-              );
-            }}
-            endAdornment={
+
+        <TextField
+          label="Email"
+          type="email"
+          id="email"
+          value={state.email.value}
+          onChange={(e) => {
+            validateAndUpdate("email", e.target.value, dispatch, state, false);
+          }}
+          onBlur={(e) => {
+            validateAndUpdate("email", e.target.value, dispatch, state, true);
+          }}
+          error={state.email.touched && state.email.hasError}
+          helperText={
+            state.email.touched && state.email.hasError
+              ? state.email.error
+              : null
+          }
+        />
+
+        <TextField
+          label="Password"
+          type={showPassword ? "text" : "password"}
+          id="password"
+          value={state.password.value}
+          onChange={(e) => {
+            validateAndUpdate(
+              "password",
+              e.target.value,
+              dispatch,
+              state,
+              false
+            );
+          }}
+          InputProps={{
+            endAdornment: (
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
@@ -95,20 +86,18 @@ export default function EmailPasswordLogin() {
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
-            }
-            onBlur={(e) => {
-              validateAndUpdate(
-                "password",
-                e.target.value,
-                dispatch,
-                state,
-                true
-              );
-            }}
-            error={state.password.hasError}
-            helperText={state.password.error}
-          />
-        </FormControl>
+            ),
+          }}
+          onBlur={(e) => {
+            validateAndUpdate(
+              "password",
+              e.target.value,
+              dispatch,
+              state,
+              true
+            );
+          }}
+        />
         <a classname="fs-800 ff-serif" href="/auth/forgotpwd">
           Reset password
         </a>
