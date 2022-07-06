@@ -12,6 +12,12 @@ npm run dev
 yarn dev
 ```
 
+### Storybook
+
+To run your Storybook, type:
+
+npm run storybook
+
 ## Authentication
 
 Firebase authentication
