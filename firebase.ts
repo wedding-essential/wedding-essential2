@@ -18,6 +18,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 if (!firebase.apps.length) {
+  // Change configs for test and development environments
   if (
     process.env.NODE_ENV === "test" ||
     process.env.NODE_ENV === "development"
@@ -25,9 +26,12 @@ if (!firebase.apps.length) {
     firebaseConfig.apiKey = "myFak3AP1K3y";
     firebaseConfig.projectId = "my-fake-wedding";
   }
+
+  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 }
 
+// Setup Firebase Emulator for test and development environments
 if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
   const db = firebase.firestore();
   const auth = firebase.auth();
@@ -35,4 +39,5 @@ if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
   auth.useEmulator("http://localhost:9099");
   db.useEmulator("localhost", 8080);
 }
+
 export default firebase;

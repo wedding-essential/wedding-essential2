@@ -1,6 +1,5 @@
 import authContext from "../contexts/authContext";
 import { useRouter } from "next/router";
-import Loading from "../components/Loading";
 import { useEffect } from "react";
 
 export default function protectedRoute(WrappedComponent) {
