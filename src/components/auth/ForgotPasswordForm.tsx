@@ -61,6 +61,7 @@ export default function ForgotPasswordForm() {
       <Grid item>
         <TextField
           fullWidth
+          autoFocus
           type="email"
           label="email"
           id="email"
@@ -80,11 +81,14 @@ export default function ForgotPasswordForm() {
         />
       </Grid>
       <Grid item alignSelf="center">
-        <Button href="/auth/couple-login">Oh, I remember now !</Button>
+        <Button color="secondary" href="/auth/couple-login">
+          Oh, I remember now !
+        </Button>
       </Grid>
       <Grid item alignSelf="center">
         <Button
           variant="contained"
+          color="secondary"
           disabled={!state.isFormValid.value}
           title="send-email"
           className="button small-button"

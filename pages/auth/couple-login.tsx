@@ -9,8 +9,6 @@ import authRedirectHook from "../../src/helpers/authRedirect";
 export default function login(): JSX.Element {
   const [emailFormIsOpen, setEmailFormIsOpen] = useState(false);
   const router = useRouter();
-  //TODO: redirect users with verified
-  //If auth is not null and email is not verified, redirect to verify email
   const { authState } = authContext.useAuth();
 
   React.useEffect(() => {

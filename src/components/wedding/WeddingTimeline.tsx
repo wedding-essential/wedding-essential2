@@ -7,6 +7,7 @@ import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import { Event } from "../../../app_types";
 
 /* TODO */
@@ -47,22 +48,34 @@ function buildTimelines(events: Event[]) {
 
   return days.map((day, idx) => {
     return (
-      <div key={(Math.random() * idx).toString()}>
-        <h3 className="text-align-center ff-sans">
+      <Grid item key={(Math.random() * idx).toString()}>
+        <Typography align="center">
           {new Date(day).toLocaleDateString(undefined, {
             dateStyle: "full",
           })}
-        </h3>
+        </Typography>
         <Timeline>
           {buildTimelineItems(
             events.filter((event) => event.date.toLocaleDateString() === day)
           )}
         </Timeline>
-      </div>
+      </Grid>
     );
   });
 }
 
 export default function WeddingTimeline({ events }) {
-  return <div>{buildTimelines(events)};</div>;
+  if (events.length < 1) {
+    return (
+      <Grid item>
+        <Typography align="center">No event yet.</Typography>
+        <Typography align="center">Create your first event.</Typography>
+      </Grid>
+    );
+  }
+  return (
+    <Grid container direction="column" justifyContent="center">
+      {buildTimelines(events)}
+    </Grid>
+  );
 }
