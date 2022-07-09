@@ -8,8 +8,10 @@ import { formReducer } from "../../helpers/EmailPasswordForm";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Grid from "@mui/material/Grid";
 
 export default function EmailPasswordLogin() {
   const initialValues = {
@@ -33,15 +35,23 @@ export default function EmailPasswordLogin() {
   const { authDispatch } = authContext.useAuth();
 
   return (
-    <>
-      <div className="flex flex-col auth-form" title="login-form">
+    <Grid
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="stretch"
+      spacing={3}
+    >
+      <Grid item>
         {state.isFormValid.show && !state.isFormValid.value && (
           <div title="error-form" className="text-red fs-300">
             <p>{state.isFormValid.error}</p>
           </div>
         )}
-
+      </Grid>
+      <Grid item>
         <TextField
+          fullWidth
           label="Email"
           type="email"
           id="email"
@@ -59,8 +69,10 @@ export default function EmailPasswordLogin() {
               : null
           }
         />
-
+      </Grid>
+      <Grid item>
         <TextField
+          fullWidth
           label="Password"
           type={showPassword ? "text" : "password"}
           id="password"
@@ -98,12 +110,16 @@ export default function EmailPasswordLogin() {
             );
           }}
         />
-        <a classname="fs-800 ff-serif" href="/auth/forgotpwd">
+      </Grid>
+      <Grid item>
+        <a className="ff-serif text-align-center" href="/auth/forgotpwd">
           Reset password
         </a>
-        <button
+      </Grid>
+      <Grid item alignSelf="center">
+        <Button
+          variant="contained"
           title="login"
-          className="button small-button"
           onClick={() => {
             submitHandler(
               state,
@@ -115,8 +131,8 @@ export default function EmailPasswordLogin() {
           }}
         >
           Log in
-        </button>
-      </div>
-    </>
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
