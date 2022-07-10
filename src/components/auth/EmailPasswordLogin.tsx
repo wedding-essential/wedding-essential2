@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 
 export default function EmailPasswordLogin() {
@@ -109,12 +110,17 @@ export default function EmailPasswordLogin() {
               true
             );
           }}
+          helperText={
+            <Link
+              color="secondary"
+              underline="hover"
+              variant="inherit"
+              href="/auth/forgotpwd"
+            >
+              Reset password
+            </Link>
+          }
         />
-      </Grid>
-      <Grid item>
-        <a className="ff-serif text-align-center" href="/auth/forgotpwd">
-          Reset password
-        </a>
       </Grid>
       <Grid item alignSelf="center">
         <Button
