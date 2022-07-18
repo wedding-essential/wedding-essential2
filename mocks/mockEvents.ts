@@ -1,32 +1,33 @@
 import { v4 as uuidv4 } from "uuid";
 import { Event } from "../app_types";
+import { DateTime } from "luxon";
 
 export const mockEvents: Event[] = [
   {
     id: 1,
     name: "Reception",
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
+    date: DateTime.now().plus({ days: 1 }),
     location: "Amazing restaurant",
     description: "Miam Miam Miam",
   },
   {
     id: 2,
     name: "Church ceremony",
-    date: new Date(Date.now()),
+    date: DateTime.now().plus({ days: 1, hours: 3 }),
     location: "Church",
     description: "Main ceremony",
   },
   {
     id: 3,
     name: "Dress fitting for her",
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
+    date: DateTime.now().minus({ days: 25 }),
     location: "Wedding dress shop",
     description: "Get that dress",
   },
   {
     id: 4,
     name: "Suit fitting for him",
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 - 1000 * 60 * 60 * 2),
+    date: DateTime.now().minus({ days: 25, hours: 3 }),
     location: "Suit shop",
     description: "Get that Suit",
   },

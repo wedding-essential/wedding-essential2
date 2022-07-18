@@ -8,7 +8,7 @@ export interface User {
 export interface Event {
   id: number;
   name: string;
-  date: Date;
+  date: any;
   location: string;
   description: string;
 }

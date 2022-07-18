@@ -12,6 +12,10 @@ npm run dev
 yarn dev
 ```
 
+### Dealing with Dates
+
+[Documentation](https://moment.github.io/luxon/#/math?id=comparing-datetimes) to Luxon
+
 ### Storybook
 
 To run your Storybook, type:

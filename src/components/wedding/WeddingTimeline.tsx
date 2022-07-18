@@ -9,24 +9,34 @@ import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Event } from "../../../app_types";
+import { DateTime } from "luxon";
 
-/* TODO */
-/* When an event is passed the dot is outlined. Dot and Connectors are grey */
-/* When an event is to come, the dot is full. Dot and Connectors are gold */
-
+function isPastEvent(event) {
+  const currentEvent = DateTime.fromISO(event.date);
+  const now = DateTime.now();
+  return currentEvent < now;
+}
 function buildTimelineItems(events: Event[]) {
   return events.map((event) => {
     return (
       <TimelineItem key={event.id}>
         <TimelineOppositeContent>
           <Typography color="textSecondary">
-            {event.date.toLocaleTimeString(undefined, { timeStyle: "short" })}
+            {event.date.toLocaleString(DateTime.TIME_24_SIMPLE)}
           </Typography>
         </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot variant="outlined" />
-          <TimelineConnector />
-        </TimelineSeparator>
+        {isPastEvent(event) ? (
+          <TimelineSeparator>
+            <TimelineDot variant="outlined" />
+            <TimelineConnector />
+          </TimelineSeparator>
+        ) : (
+          <TimelineSeparator>
+            <TimelineDot color="primary" />
+            <TimelineConnector />
+          </TimelineSeparator>
+        )}
+
         <TimelineContent>
           <Typography>{event.name}</Typography>
         </TimelineContent>
@@ -36,27 +46,26 @@ function buildTimelineItems(events: Event[]) {
 }
 
 function buildTimelines(events: Event[]) {
+  const test = events.map((event) =>
+    event.date.toLocaleString(DateTime.DATE_MED)
+  );
+
   // Find different days and sort them
-  const days = events
-    .map((event) => event.date.toLocaleDateString())
-    .filter((date, index, array) => {
-      return array.indexOf(date) === index;
-    })
-    .sort((a, b) => {
-      return new Date(a).getTime() - new Date(b).getTime();
-    });
+  const days = Array.from(new Set(test)).sort((a, b) => {
+    return b - a;
+  });
 
   return days.map((day, idx) => {
     return (
       <Grid item key={(Math.random() * idx).toString()}>
         <Typography align="center">
-          {new Date(day).toLocaleDateString(undefined, {
-            dateStyle: "full",
-          })}
+          {day.toLocaleString(DateTime.DATE_MED)}
         </Typography>
         <Timeline>
           {buildTimelineItems(
-            events.filter((event) => event.date.toLocaleDateString() === day)
+            events.filter(
+              (event) => event.date.toLocaleString(DateTime.DATE_MED) === day
+            )
           )}
         </Timeline>
       </Grid>
