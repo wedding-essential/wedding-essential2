@@ -1,5 +1,4 @@
 import firebase from "../../firebase";
-import { createUser } from "../helpers/firebaseUser";
 
 export const signUpwithEmailAndPassword = (formState, dispatch) => {
   firebase

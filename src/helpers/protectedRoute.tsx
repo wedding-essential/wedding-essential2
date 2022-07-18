@@ -6,7 +6,6 @@ export default function protectedRoute(WrappedComponent) {
   return (props: any) => {
     const { auth, loading } = authContext.useAuth().authState;
     const router = useRouter();
-    console.log(auth, loading);
 
     useEffect(() => {
       if (!loading && !auth) {
