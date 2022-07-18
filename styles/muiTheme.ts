@@ -18,6 +18,18 @@ export const greenGoldThemeOptions: ThemeOptions = {
     h2: {
       fontFamily: "Quattrocento",
     },
+    h3: {
+      fontFamily: "Quattrocento",
+    },
+    h4: {
+      fontFamily: "Quattrocento",
+    },
+    h5: {
+      fontFamily: "Quattrocento",
+    },
+    h6: {
+      fontFamily: "Quattrocento",
+    },
   },
 };
 
