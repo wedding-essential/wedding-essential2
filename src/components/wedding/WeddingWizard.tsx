@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 import { emailValidator } from "../../validation/validators";
 
 // Wizard components
@@ -158,6 +160,7 @@ function Guests() {
     setGuestList(Array.from(new Set([...guestList, ...multipleGuests])));
     setInputGuests("");
   }
+
   function AddButton() {
     return (
       <Button
@@ -171,15 +174,18 @@ function Guests() {
 
   return (
     <>
-      {/* {console.log(invalidGuests)} */}
-
       <Typography variant="h3" gutterBottom component="h1">
         Add guests
       </Typography>
-      <Grid container direction="row" justifyContent={"space-around"}>
-        <Grid item>
+      <Grid
+        container
+        direction="row"
+        columnSpacing={3} /* justifyContent={"space-around"} */
+      >
+        <Grid item xs={6}>
           {!multipleInputGuests && (
             <TextField
+              fullWidth
               id="guest"
               label="Guest"
               type="email"
@@ -233,9 +239,29 @@ function Guests() {
               }
             />
           )}
-          {invalidGuests.join("\n")}
+          {invalidGuests.length > 0 && (
+            <Grid item xs={6}>
+              <Typography color="warning.dark" component="h6">
+                {invalidGuests.length > 1
+                  ? `${invalidGuests.length} emails are invalid: `
+                  : `${invalidGuests.length} email is invalid: `}
+              </Typography>
+              <List dense>
+                {invalidGuests.map((invalid) => (
+                  <ListItem>
+                    <Typography color="warning.dark">{invalid}</Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </Grid>
+          )}
         </Grid>
-        <Grid item>
+        <Grid item xs={6}>
+          <Typography>
+            {guestList.length > 1
+              ? `You have ${guestList.length} guests:`
+              : `You have ${guestList.length} guest:`}
+          </Typography>
           <Box
             sx={{
               display: "flex",
