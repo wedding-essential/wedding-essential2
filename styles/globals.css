@@ -398,3 +398,8 @@ body {
   flex-direction: column;
   row-gap: 1.5em;
 }
+
+.MuiStepper-root {
+  width: 100vw;
+  overflow: scroll;
+}

@@ -31,6 +31,16 @@ export const greenGoldThemeOptions: ThemeOptions = {
       fontFamily: "Quattrocento",
     },
   },
+  components: {
+    MuiStepper: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+          "overflow-x": "scroll",
+        },
+      },
+    },
+  },
 };
 
 export const greenGoldTheme = createTheme(greenGoldThemeOptions);

@@ -9,6 +9,10 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { emailValidator } from "../../validation/validators";
+import { Event } from "../../../app_types";
+import { DateTime } from "luxon";
+import { v4 as uuidv4 } from "uuid";
+import WeddingTimeline from "./WeddingTimeline";
 
 export function Intro() {
   return (
@@ -47,6 +51,132 @@ export function Name() {
         The wedding name will appear on each communication to your guests. It
         can be the name of the couple.
       </Typography>
+    </>
+  );
+}
+export function Couple() {
+  const [loveBirdOne, setLoveBirdOne] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  const [loveBirdTwo, setLoveBirdTwo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  const [error, setError] = useState({ field: "", message: "" });
+
+  function handleChange(
+    field: "firstName" | "lastName" | "email",
+    number: 1 | 2,
+    value: string
+  ) {
+    if (number === 1) {
+      setLoveBirdOne({ ...loveBirdOne, [field]: value });
+    } else {
+      setLoveBirdTwo({ ...loveBirdTwo, [field]: value });
+    }
+    if (field === "email") {
+      try {
+        emailValidator(value);
+      } catch (err) {
+        setError({ field: field, message: `${value} ${err.message}` });
+      }
+    }
+  }
+
+  return (
+    <>
+      <Typography variant="h3" gutterBottom component="h1">
+        Love Birds
+      </Typography>
+      <Grid container columnGap={3} rowGap={2}>
+        <Grid container xs={12} md={6} columnSpacing={2}>
+          <Grid item xs={12}>
+            <Typography component="h5">First love bird</Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              id="firstName"
+              label="Firstname"
+              type="text"
+              margin="normal"
+              value={loveBirdOne.firstName}
+              onChange={(e) => handleChange("firstName", 1, e.target.value)}
+              required
+              autoFocus
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              id="lastName"
+              label="Lastname"
+              type="text"
+              margin="normal"
+              value={loveBirdOne.lastName}
+              onChange={(e) => handleChange("lastName", 1, e.target.value)}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="email"
+              label="Email"
+              type="email"
+              margin="normal"
+              value={loveBirdOne.email}
+              onChange={(e) => handleChange("email", 1, e.target.value)}
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container xs={12} md={6} columnSpacing={2}>
+          <Grid item xs={12}>
+            <Typography component="h5">Second love bird</Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              id="firstName"
+              label="Firstname"
+              type="text"
+              margin="normal"
+              value={loveBirdTwo.firstName}
+              onChange={(e) => handleChange("firstName", 2, e.target.value)}
+              required
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              id="lastName"
+              label="Lastname"
+              type="text"
+              margin="normal"
+              value={loveBirdTwo.lastName}
+              onChange={(e) => handleChange("lastName", 2, e.target.value)}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="email"
+              label="Email"
+              type="email"
+              margin="normal"
+              value={loveBirdTwo.email}
+              onChange={(e) => handleChange("email", 2, e.target.value)}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Typography paragraph>Who are the stars of this wedding?</Typography>
     </>
   );
 }
@@ -280,39 +410,131 @@ export function Guests() {
   );
 }
 export function Events() {
+  const initialState = {
+    name: "",
+    description: "",
+    location: "",
+    day: "",
+    time: "",
+  };
+  const [inputEvents, setInputEvents] = useState(initialState);
+  const [eventList, setEventList] = useState([]);
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputEvents({
+      ...inputEvents,
+      [event.target.id]: event.target.value,
+    });
+  }
+
+  function handleAdd() {
+    const [year, month, day] = inputEvents.day.split("-").map(Number);
+    const [hour, minute] = inputEvents.time.split(":").map(Number);
+    //reformat the date
+    const reformatedDate = DateTime.fromObject({
+      year,
+      month,
+      day,
+      hour,
+      minute,
+    });
+
+    const newEvent: Event = {
+      id: uuidv4(),
+      name: inputEvents.name,
+      description: inputEvents.description,
+      location: inputEvents.location,
+      date: reformatedDate.toJSDate(),
+    };
+    setEventList(Array.from(new Set([...eventList, newEvent])));
+    setInputEvents(initialState);
+  }
+  function handleUpdate(event: Event) {
+    // Take an event and update the InputEvents
+  }
+
   return (
     <>
       <Typography variant="h3" gutterBottom component="h1">
         Add events
       </Typography>
-      <Typography paragraph>Event creator here.</Typography>
+      <Grid container direction="row" columnSpacing={2}>
+        <Grid container xs={12} md={6} columnSpacing={1}>
+          <Grid item xs={12}>
+            <TextField
+              id="name"
+              label="Event name"
+              type="text"
+              margin="normal"
+              value={inputEvents.name}
+              onChange={handleChange}
+              fullWidth
+              autoFocus
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              id="location"
+              label="Location"
+              type="text"
+              margin="normal"
+              value={inputEvents.location}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="description"
+              label="Description"
+              type="text"
+              margin="normal"
+              multiline
+              rows={2}
+              value={inputEvents.description}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="day"
+              label="Day"
+              type="date"
+              margin="normal"
+              value={inputEvents.day}
+              onChange={handleChange}
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="time"
+              label="Time"
+              type="time"
+              margin="normal"
+              value={inputEvents.time}
+              onChange={handleChange}
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button onClick={handleAdd} variant="contained" fullWidth>
+              <AddIcon />
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <WeddingTimeline events={eventList} />
+        </Grid>
+      </Grid>
       <Typography paragraph>
         Add all the events of your wedding, from dress fitting to the ceremony.
-      </Typography>
-    </>
-  );
-}
-
-export function Couple() {
-  return (
-    <>
-      <Typography variant="h3" gutterBottom component="h1">
-        Love Birds
-      </Typography>
-      <TextField
-        fullWidth
-        id="name"
-        label="Name"
-        type="text"
-        margin="normal"
-        value={"hello"}
-        onChange={() => console.log("hello couple")}
-        required
-        autoFocus
-      />
-      <Typography paragraph>
-        The wedding name will appear on each communication to your guests. It
-        can be the name of the couple.
       </Typography>
     </>
   );

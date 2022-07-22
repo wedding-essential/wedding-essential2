@@ -17,8 +17,8 @@ import {
 
 //Wizard steps
 
-export default function WeddingWizard({ initialStep = 4 }) {
-  const [currentStep, setCurrentStep] = useState(4);
+export default function WeddingWizard(props) {
+  const [currentStep, setCurrentStep] = useState(0);
 
   const wizardSteps = [
     {
@@ -67,7 +67,6 @@ export default function WeddingWizard({ initialStep = 4 }) {
   function handleNext() {
     const isRequired = wizardSteps[currentStep].required;
     if (!isRequired || (isRequired && true)) {
-      //true will be replaced by existence of the value of the step
       setCurrentStep(currentStep + 1);
     }
   }
@@ -77,43 +76,44 @@ export default function WeddingWizard({ initialStep = 4 }) {
   }
 
   useEffect(() => {
-    setCurrentStep(initialStep);
+    setCurrentStep(props.initialStep | 0);
   }, []);
 
   return (
-    <Grid
-      container
-      flexDirection="column"
-      justifyContent="space-between"
-      spacing={3}
-    >
-      <Grid item>
-        <Stepper activeStep={currentStep} alternativeLabel>
-          {wizardSteps.map((step) => {
-            return (
-              <Step key={step.label}>
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
+    <>
+      <Stepper activeStep={currentStep} alternativeLabel>
+        {wizardSteps.map((step) => {
+          return (
+            <Step key={step.label}>
+              <StepLabel>{step.label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      <Grid
+        container
+        flexDirection="column"
+        justifyContent="space-between"
+        spacing={3}
+      >
+        <Grid item></Grid>
+        <Grid item>
+          {<Container>{wizardSteps[currentStep].component}</Container>}
+        </Grid>
+        <Grid item alignSelf="center">
+          {currentStep !== 0 && <Button onClick={handleBack}>Back</Button>}
+          {currentStep !== wizardSteps.length - 1 && (
+            <Button onClick={handleNext} variant="contained">
+              Next
+            </Button>
+          )}
+          {currentStep === wizardSteps.length - 1 && (
+            <Button variant="contained" size="large" onClick={handleCreate}>
+              Create
+            </Button>
+          )}
+        </Grid>
       </Grid>
-      <Grid item>
-        {<Container>{wizardSteps[currentStep].component}</Container>}
-      </Grid>
-      <Grid item alignSelf="center">
-        {currentStep !== 0 && <Button onClick={handleBack}>Back</Button>}
-        {currentStep !== wizardSteps.length - 1 && (
-          <Button onClick={handleNext} variant="contained">
-            Next
-          </Button>
-        )}
-        {currentStep === wizardSteps.length - 1 && (
-          <Button variant="contained" size="large" onClick={handleCreate}>
-            Create
-          </Button>
-        )}
-      </Grid>
-    </Grid>
+    </>
   );
 }
