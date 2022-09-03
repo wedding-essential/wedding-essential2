@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export interface User {
   personaId: string;
   lastName: string;
@@ -8,24 +10,18 @@ export interface User {
 export interface Event {
   id: number;
   name: string;
-  date: any;
+  date: DateTime;
   location: string;
   description: string;
+  participants: User[];
 }
 
 export interface Wedding {
   weddingId: string;
   name: string;
   story: string;
-  events: Event[];
   dresscode: string;
   witnesses: string[];
-}
-
-export interface EventParticipation {
-  weddingId: string;
-  eventId: string;
-  userId: string;
 }
 
 export interface Rsvp {

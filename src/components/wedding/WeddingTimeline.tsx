@@ -16,7 +16,7 @@ function isPastEvent(event) {
   const now = DateTime.now();
   return currentEvent < now;
 }
-function buildTimelineItems(events: Event[]) {
+function buildTimelineContent(events: Event[]) {
   return events.map((event) => {
     return (
       <TimelineItem key={event.id}>
@@ -45,29 +45,30 @@ function buildTimelineItems(events: Event[]) {
   });
 }
 
-function buildTimelines(events: Event[]) {
-  const test = events.map((event) =>
-    event.date.toLocaleString(DateTime.DATE_MED)
-  );
-
-  // Find different days and sort them
-  const days = Array.from(new Set(test)).sort((a, b) => {
-    return b - a;
+function buildTimeline(events: Event[]) {
+  events = events.sort((a: Event, b: Event) => {
+    return +a.date - +b.date;
   });
+
+  const eventsPerDay = new Map<String, Event[]>();
+  events.forEach((evt) => {
+    const dateAsString = evt.date.toFormat("yyyy MM dd");
+    if (eventsPerDay.has(dateAsString)) {
+      eventsPerDay.get(dateAsString).push(evt);
+    } else {
+      eventsPerDay.set(dateAsString, [evt]);
+    }
+  });
+
+  const days = Array.from(new Set(eventsPerDay.keys())).sort();
 
   return days.map((day, idx) => {
     return (
       <Grid item key={(Math.random() * idx).toString()}>
         <Typography align="center">
-          {day.toLocaleString(DateTime.DATE_MED)}
+          {eventsPerDay.get(day)[0].date.toLocaleString()}
         </Typography>
-        <Timeline>
-          {buildTimelineItems(
-            events.filter(
-              (event) => event.date.toLocaleString(DateTime.DATE_MED) === day
-            )
-          )}
-        </Timeline>
+        <Timeline>{buildTimelineContent(eventsPerDay.get(day))}</Timeline>
       </Grid>
     );
   });
@@ -84,7 +85,7 @@ export default function WeddingTimeline({ events }) {
   }
   return (
     <Grid container direction="column" justifyContent="center">
-      {buildTimelines(events)}
+      {buildTimeline(events)}
     </Grid>
   );
 }

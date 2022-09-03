@@ -30,6 +30,9 @@ export const greenGoldThemeOptions: ThemeOptions = {
     h6: {
       fontFamily: "Quattrocento",
     },
+    body1: {
+      fontFamily: "Poppins",
+    },
   },
   components: {
     MuiStepper: {

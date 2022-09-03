@@ -5,17 +5,13 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import {
-  Intro,
-  Name,
-  Story,
-  Dresscode,
-  Guests,
-  Events,
-  Couple,
-} from "./WeddingWizardSteps";
-
-//Wizard steps
+import Intro from "./wizardSteps/Intro";
+import Couple from "./wizardSteps/Couple";
+import Name from "./wizardSteps/Name";
+import Dresscode from "./wizardSteps/Dresscode";
+import Events from "./wizardSteps/Events";
+import Story from "./wizardSteps/Story";
+import Guests from "./wizardSteps/Guests";
 
 export default function WeddingWizard(props) {
   const [currentStep, setCurrentStep] = useState(0);
